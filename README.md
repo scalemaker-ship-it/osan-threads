@@ -1,23 +1,26 @@
 # 오산디에스치과 스레드 자동화 (GitHub Actions 버전)
 
-**매일 저녁 5시(17:00 KST)** 에 GitHub Actions가 클라우드에서 실행되어,
+**매일 저녁 17~19시(KST) 사이 매번 다른 시각**에 GitHub Actions가 클라우드에서 실행되어,
 Claude로 스레드 글을 작성하고 Threads에 자동 게시하는 무료 자동화입니다.
 **내 맥이 꺼져 있어도 동작합니다.**
 
 - 리포지토리: `scalemaker-ship-it/osan-threads`
-- 스케줄: 매일 17:00 KST (`cron: "0 8 * * *"`, UTC 08:00)
+- 스케줄: 매일 1회, 17~19시 KST 6개 슬롯(17:03·17:27·17:44·18:09·18:31·18:52) 중 날짜별로 하나
+- 콘텐츠: 60일치 주제 캘린더를 날짜 순서대로 하나씩 순환 (일상 30 · 정보 24 · 홍보 6)
 
 ## 구조
 
 | 경로 | 역할 |
 |---|---|
-| `threads_post.py` | 요일별 주제 선택 → Claude 글 생성 → Threads 게시 |
-| `.github/workflows/threads-daily.yml` | 매일 17:00 KST 크론 + 수동 실행(드라이런 옵션) |
+| `threads_post.py` | 오늘 슬롯 확인 → 60일 캘린더에서 오늘 주제 선택 → Claude 글 생성 → Threads 게시 |
+| `.github/workflows/threads-daily.yml` | 17~19시 6개 슬롯 크론 + 수동 실행(드라이런 옵션) |
 | `requirements.txt` | 파이썬 패키지 (anthropic, requests) |
 | `.env.example` | 로컬 실행용 환경변수 예시 |
 
-요일별 주제: 월=지역 소통 / 화=치아 상식 / 수=유아 치아 / 목=임산부 /
-금=칫솔·치약 / 토=병원 홍보 / 일=주말 자가점검 (매일 발행하도록 일요일 주제 추가)
+### 발행 시각이 매일 달라지는 방식
+비공개 레포라 Actions 사용시간을 아끼기 위해, 긴 `sleep` 대신 **여러 시간 슬롯을 크론으로 등록**하고
+스크립트가 날짜 해시로 오늘의 슬롯 하나만 골라 그때만 발행합니다(`SCHEDULE_CRON`으로 판별).
+나머지 슬롯 실행은 몇 초 만에 종료됩니다.
 
 ## 환경변수 (= GitHub Secrets)
 
@@ -62,5 +65,6 @@ python threads_post.py
 
 - 모델: `claude-opus-4-8`.
 - Claude API는 사용량 과금이나 하루 1회 짧은 글만 생성하므로 비용은 매우 적습니다. Threads API는 무료.
-- 스케줄 변경은 `.github/workflows/threads-daily.yml`의 `cron` 값 수정 (UTC 기준, KST −9시간).
-- Threads 액세스 토큰은 만료될 수 있습니다(장기 토큰 약 60일). 만료 시 Secret을 갱신하세요.
+- 시간대·슬롯 변경은 `.github/workflows/threads-daily.yml`의 `cron` 값과 `threads_post.py`의 `SLOT_CRONS`를 **같이** 수정 (문자열이 정확히 일치해야 함, UTC 기준).
+- 주제 캘린더는 `threads_post.py`의 `CALENDAR`(60개) 수정. 시작일은 `ANCHOR`.
+- Threads 액세스 토큰은 약 60일 후 만료됩니다(60일치 캘린더와 주기가 맞음). 만료 시 `THREADS_ACCESS_TOKEN` Secret을 갱신하세요.
