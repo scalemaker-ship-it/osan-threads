@@ -136,8 +136,9 @@ def main() -> None:
     dry_run = is_dry_run()
 
     require_env("ANTHROPIC_API_KEY")  # SDK가 환경변수로 읽음
-    # 드라이런에서는 Threads 자격증명 없이도 글 생성만 검증한다.
-    user_id = os.environ.get("THREADS_USER_ID") if dry_run else require_env("THREADS_USER_ID")
+    # 사용자 ID는 액세스 토큰만 있으면 "me" 별칭으로 대체 가능 (Threads Graph API).
+    # 따라서 실제 발행에 필수인 시크릿은 THREADS_ACCESS_TOKEN 하나뿐이다.
+    user_id = os.environ.get("THREADS_USER_ID") or "me"
     access_token = (
         os.environ.get("THREADS_ACCESS_TOKEN") if dry_run else require_env("THREADS_ACCESS_TOKEN")
     )
