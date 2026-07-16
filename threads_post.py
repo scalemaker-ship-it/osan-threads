@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """오산디에스치과 스레드 자동 게시.
 
-n8n 워크플로우(legacy/오산디에스치과_스레드_자동화_최종.json)를 이식·확장한 스크립트.
-매일 저녁 5시(KST)에 GitHub Actions 크론으로 실행된다.
+매일 저녁 5시(KST)에 GitHub Actions 크론으로 실행되는 스크립트.
 
 흐름: 요일별 주제 선택 → Claude로 글 생성 → Threads 컨테이너 생성 → 30초 대기 → 발행
 

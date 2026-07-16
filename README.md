@@ -1,7 +1,7 @@
 # 오산디에스치과 스레드 자동화 (GitHub Actions 버전)
 
-n8n Cloud를 대체하는 무료 자동화입니다. **매일 저녁 5시(17:00 KST)** 에
-GitHub Actions가 클라우드에서 실행되어, Claude로 스레드 글을 작성하고 Threads에 자동 게시합니다.
+**매일 저녁 5시(17:00 KST)** 에 GitHub Actions가 클라우드에서 실행되어,
+Claude로 스레드 글을 작성하고 Threads에 자동 게시하는 무료 자동화입니다.
 **내 맥이 꺼져 있어도 동작합니다.**
 
 - 리포지토리: `scalemaker-ship-it/osan-threads`
@@ -15,7 +15,6 @@ GitHub Actions가 클라우드에서 실행되어, Claude로 스레드 글을 �
 | `.github/workflows/threads-daily.yml` | 매일 17:00 KST 크론 + 수동 실행(드라이런 옵션) |
 | `requirements.txt` | 파이썬 패키지 (anthropic, requests) |
 | `.env.example` | 로컬 실행용 환경변수 예시 |
-| `legacy/` | 원본 n8n 워크플로우 JSON (참고용 보관) |
 
 요일별 주제: 월=지역 소통 / 화=치아 상식 / 수=유아 치아 / 목=임산부 /
 금=칫솔·치약 / 토=병원 홍보 / 일=주말 자가점검 (매일 발행하도록 일요일 주제 추가)
@@ -61,7 +60,7 @@ python threads_post.py
 
 ## 참고
 
-- 모델: `claude-opus-4-8` (기존 n8n은 `claude-opus-4-5`, 최신으로 갱신).
+- 모델: `claude-opus-4-8`.
 - Claude API는 사용량 과금이나 하루 1회 짧은 글만 생성하므로 비용은 매우 적습니다. Threads API는 무료.
 - 스케줄 변경은 `.github/workflows/threads-daily.yml`의 `cron` 값 수정 (UTC 기준, KST −9시간).
 - Threads 액세스 토큰은 만료될 수 있습니다(장기 토큰 약 60일). 만료 시 Secret을 갱신하세요.
