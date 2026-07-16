@@ -1,11 +1,16 @@
 name: 오산 스레드 자동 게시
 
-# 월~토 오전 9시(KST). GitHub Actions 크론은 UTC 기준이라
-# 09:00 KST = 00:00 UTC → "0 0 * * 1-6"
+# 매일 저녁 5시(KST). GitHub Actions 크론은 UTC 기준이라
+# 17:00 KST = 08:00 UTC → "0 8 * * *"
 on:
   schedule:
-    - cron: "0 0 * * 1-6"
-  workflow_dispatch: {}   # 수동 실행 버튼 (테스트용)
+    - cron: "0 8 * * *"
+  workflow_dispatch:        # 수동 실행 버튼
+    inputs:
+      dry_run:
+        description: "드라이런(글만 생성, Threads 발행 안 함)"
+        type: boolean
+        default: false
 
 jobs:
   post:
@@ -25,4 +30,5 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
         run: python threads_post.py

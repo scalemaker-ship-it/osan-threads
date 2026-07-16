@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """오산디에스치과 스레드 자동 게시.
 
-n8n 워크플로우(오산디에스치과_스레드_자동화_최종.json)를 그대로 이식한 스크립트.
-매일 오전 9시(KST, 월~토)에 GitHub Actions 크론으로 실행된다.
+n8n 워크플로우(legacy/오산디에스치과_스레드_자동화_최종.json)를 이식·확장한 스크립트.
+매일 저녁 5시(KST)에 GitHub Actions 크론으로 실행된다.
 
 흐름: 요일별 주제 선택 → Claude로 글 생성 → Threads 컨테이너 생성 → 30초 대기 → 발행
 
 환경변수(= GitHub Secrets):
-  ANTHROPIC_API_KEY     Claude API 키
-  THREADS_USER_ID       Threads 사용자 ID
-  THREADS_ACCESS_TOKEN  Threads 액세스 토큰
+  ANTHROPIC_API_KEY     Claude API 키              (필수)
+  THREADS_USER_ID       Threads 사용자 ID          (실제 발행 시 필수)
+  THREADS_ACCESS_TOKEN  Threads 액세스 토큰        (실제 발행 시 필수)
+  DRY_RUN               "1"/"true"면 글만 생성하고 Threads 발행은 건너뜀 (테스트용)
 """
 
 import os
@@ -68,6 +69,10 @@ TOPICS = {
         "name": "오산디에스치과 홍보",
         "detail": "오산디에스치과를 자연스럽게 홍보하는 포스트를 작성해주세요. 주요 특징: 월수금 야간진료 운영, 토요일 진료, 교정전문의 상주, 경기 남부 라미네이트 전문, 임플란트 보험 상담 가능한 설계사 직원 상주. 광고스럽지 않고 환자 입장에서 유용하게 작성해주세요.",
     },
+    7: {
+        "name": "주말 구강 습관 자가 점검",
+        "detail": "주말에 스스로 점검해볼 수 있는 구강 건강 습관(양치 습관, 잇몸 상태 셀프 체크, 식습관 등)에 대한 포스트를 작성해주세요. 한 주를 돌아보며 가볍게 실천할 수 있는 팁을 따뜻하게 전달해주세요.",
+    },
 }
 
 THREADS_API = "https://graph.threads.net/v1.0"
@@ -124,15 +129,24 @@ def post_to_threads(user_id: str, access_token: str, text: str) -> str:
     return publish.json()["id"]
 
 
+def is_dry_run() -> bool:
+    return os.environ.get("DRY_RUN", "").strip().lower() in {"1", "true", "yes", "y"}
+
+
 def main() -> None:
-    api_key = require_env("ANTHROPIC_API_KEY")  # noqa: F841  (SDK가 환경변수로 읽음)
-    user_id = require_env("THREADS_USER_ID")
-    access_token = require_env("THREADS_ACCESS_TOKEN")
+    dry_run = is_dry_run()
+
+    require_env("ANTHROPIC_API_KEY")  # SDK가 환경변수로 읽음
+    # 드라이런에서는 Threads 자격증명 없이도 글 생성만 검증한다.
+    user_id = os.environ.get("THREADS_USER_ID") if dry_run else require_env("THREADS_USER_ID")
+    access_token = (
+        os.environ.get("THREADS_ACCESS_TOKEN") if dry_run else require_env("THREADS_ACCESS_TOKEN")
+    )
 
     now = datetime.now(KST)
     weekday = now.isoweekday()  # 월=1 ... 일=7
     topic = TOPICS.get(weekday)
-    if topic is None:
+    if topic is None:  # 모든 요일 주제가 정의돼 있어 정상적으로는 도달하지 않음
         print(f"오늘({now:%Y-%m-%d %A})은 게시일이 아닙니다. 종료합니다.")
         return
 
@@ -141,6 +155,10 @@ def main() -> None:
     print("=== 생성된 글 ===")
     print(text)
     print("=================")
+
+    if dry_run:
+        print("[DRY_RUN] Threads 발행을 건너뜁니다. (글 생성까지만 검증)")
+        return
 
     post_id = post_to_threads(user_id, access_token, text)
     print(f"게시 완료. Threads 게시물 ID: {post_id}")
