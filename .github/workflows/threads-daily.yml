@@ -1,11 +1,17 @@
 name: 오산 스레드 자동 게시
 
-# 매일 저녁 5시(KST). GitHub Actions 크론은 UTC 기준이라
-# 17:00 KST = 08:00 UTC → "0 8 * * *"
+# 매일 저녁 17~19시(KST) 사이 여러 시간 슬롯에서 실행되고,
+# 스크립트가 '오늘 배정된 슬롯' 한 번에서만 실제로 발행한다(발행 시각이 매일 달라짐).
+# GitHub Actions 크론은 UTC 기준(KST = UTC + 9).
 on:
   schedule:
-    - cron: "0 8 * * *"
-  workflow_dispatch:        # 수동 실행 버튼
+    - cron: "3 8 * * *"     # 17:03 KST
+    - cron: "27 8 * * *"    # 17:27 KST
+    - cron: "44 8 * * *"    # 17:44 KST
+    - cron: "9 9 * * *"     # 18:09 KST
+    - cron: "31 9 * * *"    # 18:31 KST
+    - cron: "52 9 * * *"    # 18:52 KST
+  workflow_dispatch:        # 수동 실행 버튼 (슬롯 검사 없이 바로 발행)
     inputs:
       dry_run:
         description: "드라이런(글만 생성, Threads 발행 안 함)"
@@ -31,4 +37,5 @@ jobs:
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
           DRY_RUN: ${{ github.event.inputs.dry_run }}
+          SCHEDULE_CRON: ${{ github.event.schedule }}
         run: python threads_post.py
