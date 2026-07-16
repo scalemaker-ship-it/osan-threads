@@ -16,6 +16,8 @@ GitHub Actions 크론이 매일 저녁 17~19시(KST) 사이 여러 시간 슬롯
   SCHEDULE_CRON         이 실행을 트리거한 크론 문자열         (Actions에서 주입)
 """
 
+from __future__ import annotations
+
 import hashlib
 import os
 import sys
@@ -65,7 +67,7 @@ CALENDAR = [
     {"name": "혀 닦기 (정보)", "detail": "입냄새의 큰 원인이 혀라는 점, 혀 닦기의 중요성을 짧고 임팩트 있게."},
     {"name": "디저트·카페 추천 (일상)", "detail": "요즘 단 게 당긴다며 오산 디저트나 카페 추천을 부탁하는 수다 글. 치과 얘기 금지."},
     {"name": "토요일 진료 안내 (홍보)", "detail": "평일에 시간 내기 힘든 분들을 위한 토요일 진료를 가볍게 소개. 광고 티 빼기."},
-    {"name": "환절기 안부 (일상)", "detail": "환절기 날씨에 감기 조심하라는 따뜻한 안부를 건네는 소소한 일상 글. 치과 얘기 금지."},
+    {"name": "날씨 안부 (일상)", "detail": "오늘 날짜의 실제 계절·날씨에 맞춰 이웃에게 건강 챙기라는 따뜻한 안부를 건네는 소소한 일상 글. 치과 얘기 금지. 계절 표현은 반드시 실제 시기에 맞게."},
     {"name": "사랑니 (정보)", "detail": "사랑니를 꼭 빼야 하는 경우와 아닌 경우를 짧고 쉽게 정리해 궁금증을 풀어주기."},
     {"name": "해장 국밥 수다 (일상)", "detail": "속 풀리는 국밥이나 해장 음식 이야기로 이웃에게 말 걸듯 추천을 부탁하는 수다 글. 치과 얘기 금지."},
     {"name": "어린이 불소·실란트 (정보)", "detail": "아이 충치 예방에 좋은 불소 도포·실란트를 부모님께 짧게 소개하는 정보 글."},
@@ -124,6 +126,35 @@ SLOT_CRONS = [
     "52 9 * * *",   # 18:52 KST
 ]
 
+# ── 월별 계절·날씨·제철 정보 (한국 기준) ───────────────────────────
+# 글에 계절/날씨/제철 음식/분위기를 넣을 때 실제 시기와 어긋나지 않도록 프롬프트에 주입한다.
+SEASON_HINTS = {
+    1: "한겨울, 매우 추움. 제철: 귤·딸기·굴·방어·과메기·시금치",
+    2: "늦겨울, 아직 춥고 곧 봄. 제철: 딸기·귤·굴·바지락·냉이",
+    3: "초봄, 쌀쌀하다 점점 풀림. 제철: 딸기·냉이·달래·주꾸미·봄동",
+    4: "봄, 따뜻하고 벚꽃. 제철: 딸기·봄나물·주꾸미·바지락·두릅",
+    5: "늦봄에서 초여름, 화창. 제철: 참외·완두·앵두·죽순·마늘종",
+    6: "초여름, 더워지고 장마 시작. 제철: 참외·수박·자두·매실·감자",
+    7: "한여름, 무덥고 장마·습함. 제철: 수박·참외·복숭아·자두·옥수수·냉면·콩국수",
+    8: "늦여름 무더위, 말복 즈음. 제철: 포도·복숭아·수박·옥수수·전복",
+    9: "초가을, 아침저녁 선선해지기 시작. 제철: 전어·햇밤·사과·배·포도·꽃게",
+    10: "가을, 선선하고 단풍. 제철: 사과·배·감·대하·꽃게·고구마·송이",
+    11: "늦가을에서 초겨울, 추워짐. 제철: 굴·홍시·귤·과메기·배추·무",
+    12: "겨울, 춥고 연말. 제철: 귤·딸기·굴·방어·과메기·대게",
+}
+
+
+def seasonal_context(now: datetime) -> str:
+    """생성 프롬프트에 넣을 날짜·계절 안내 문구."""
+    wd = ["월", "화", "수", "목", "금", "토", "일"][now.weekday()]
+    hint = SEASON_HINTS[now.month]
+    return (
+        f"[오늘 날짜/계절] {now:%Y년 %-m월 %-d일} ({wd}요일). {now.month}월 상황: {hint}.\n"
+        "계절·날씨·제철 음식·명절을 언급한다면 반드시 이 날짜에 실제로 맞는 것만 쓰세요. "
+        "지금 시기와 안 맞는 계절/과일/날씨(예: 여름에 '봄', 8월에 '딸기·쌀쌀')는 절대 쓰지 마세요."
+    )
+
+
 THREADS_API = "https://graph.threads.net/v1.0"
 
 
@@ -147,10 +178,13 @@ def chosen_slot_cron(now: datetime) -> str:
     return SLOT_CRONS[h % len(SLOT_CRONS)]
 
 
-def generate_post(topic: dict) -> str:
-    """Claude로 스레드 글을 생성한다."""
+def generate_post(topic: dict, now: datetime | None = None) -> str:
+    """Claude로 스레드 글을 생성한다. now(발행 날짜)로 계절 맥락을 반영한다."""
+    if now is None:
+        now = datetime.now(KST)
     client = anthropic.Anthropic()  # ANTHROPIC_API_KEY 환경변수 자동 사용
     user_message = (
+        f"{seasonal_context(now)}\n\n"
         f"오늘의 주제: {topic['name']}\n\n"
         f"요청사항: {topic['detail']}\n\n"
         "위 글쓰기 규칙을 반드시 지켜서 스레드 포스트를 작성해주세요."
@@ -220,7 +254,7 @@ def main() -> None:
     idx, topic = pick_topic(now)
     print(f"[{now:%Y-%m-%d %H:%M KST}] Day {idx + 1}/{len(CALENDAR)} · 주제: {topic['name']}")
 
-    text = generate_post(topic)
+    text = generate_post(topic, now)
     print("=== 생성된 글 ===")
     print(text)
     print("=================")
