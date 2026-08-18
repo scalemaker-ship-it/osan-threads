@@ -17,6 +17,10 @@ on:
         description: "드라이런(글만 생성, Threads 발행 안 함)"
         type: boolean
         default: false
+      post_text_override:
+        description: "Anthropic 크레딧 소진 등으로 Claude 생성을 건너뛰고 이 글을 그대로 발행(비우면 평소대로 Claude가 생성)"
+        type: string
+        required: false
 
 jobs:
   post:
@@ -38,4 +42,5 @@ jobs:
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
           DRY_RUN: ${{ github.event.inputs.dry_run }}
           SCHEDULE_CRON: ${{ github.event.schedule }}
+          POST_TEXT_OVERRIDE: ${{ github.event.inputs.post_text_override }}
         run: python threads_post.py

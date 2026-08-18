@@ -229,7 +229,8 @@ def is_dry_run() -> bool:
 def main() -> None:
     dry_run = is_dry_run()
 
-    require_env("ANTHROPIC_API_KEY")  # SDK가 환경변수로 읽음
+    if not os.environ.get("POST_TEXT_OVERRIDE", "").strip():
+        require_env("ANTHROPIC_API_KEY")  # SDK가 환경변수로 읽음
     # 사용자 ID는 액세스 토큰만 있으면 "me" 별칭으로 대체 가능 (Threads Graph API).
     user_id = os.environ.get("THREADS_USER_ID") or "me"
     access_token = (
@@ -254,7 +255,12 @@ def main() -> None:
     idx, topic = pick_topic(now)
     print(f"[{now:%Y-%m-%d %H:%M KST}] Day {idx + 1}/{len(CALENDAR)} · 주제: {topic['name']}")
 
-    text = generate_post(topic, now)
+    override = os.environ.get("POST_TEXT_OVERRIDE", "").strip()
+    if override:
+        print("[POST_TEXT_OVERRIDE] Claude 생성 대신 주어진 글을 사용합니다 (Anthropic API 미사용).")
+        text = override
+    else:
+        text = generate_post(topic, now)
     print("=== 생성된 글 ===")
     print(text)
     print("=================")
