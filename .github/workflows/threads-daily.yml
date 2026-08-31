@@ -22,6 +22,9 @@ on:
         type: string
         required: false
 
+permissions:
+  contents: write   # 발행 후 queue.json 소진분 커밋
+
 jobs:
   post:
     runs-on: ubuntu-latest
@@ -36,6 +39,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: 스레드 게시
+        id: post
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
@@ -44,3 +48,16 @@ jobs:
           SCHEDULE_CRON: ${{ github.event.schedule }}
           POST_TEXT_OVERRIDE: ${{ github.event.inputs.post_text_override }}
         run: python threads_post.py
+
+      - name: 소진한 큐 커밋
+        if: success()
+        run: |
+          if git diff --quiet -- queue.json; then
+            echo "queue.json 변경 없음 (큐 미사용 또는 발행 안 함). 커밋 생략."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add queue.json
+          git commit -m "큐 1건 소진 (자동 발행)"
+          git push

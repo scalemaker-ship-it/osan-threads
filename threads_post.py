@@ -19,6 +19,7 @@ GitHub Actions 크론이 매일 저녁 17~19시(KST) 사이 여러 시간 슬롯
 from __future__ import annotations
 
 import hashlib
+import json
 import os
 import sys
 import time
@@ -155,6 +156,28 @@ def seasonal_context(now: datetime) -> str:
     )
 
 
+QUEUE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "queue.json")
+
+
+def load_queue() -> list[dict]:
+    """미리 작성해둔 글 큐를 읽는다. 파일이 없으면 빈 목록."""
+    if not os.path.exists(QUEUE_FILE):
+        return []
+    with open(QUEUE_FILE, encoding="utf-8") as f:
+        return json.load(f).get("items", [])
+
+
+def pop_queue() -> None:
+    """큐 맨 앞 1건을 제거하고 저장한다(발행 성공 후 호출). 워크플로가 커밋한다."""
+    items = load_queue()
+    if not items:
+        return
+    with open(QUEUE_FILE, "w", encoding="utf-8") as f:
+        json.dump({"items": items[1:]}, f, ensure_ascii=False, indent=2)
+        f.write("\n")
+    print(f"[큐] 1건 소진. 남은 글 {len(items) - 1}건.")
+
+
 THREADS_API = "https://graph.threads.net/v1.0"
 
 
@@ -229,8 +252,9 @@ def is_dry_run() -> bool:
 def main() -> None:
     dry_run = is_dry_run()
 
-    if not os.environ.get("POST_TEXT_OVERRIDE", "").strip():
-        require_env("ANTHROPIC_API_KEY")  # SDK가 환경변수로 읽음
+    queued = load_queue()
+    if not os.environ.get("POST_TEXT_OVERRIDE", "").strip() and not queued:
+        require_env("ANTHROPIC_API_KEY")  # SDK가 환경변수로 읽음 (큐가 비었을 때만 필요)
     # 사용자 ID는 액세스 토큰만 있으면 "me" 별칭으로 대체 가능 (Threads Graph API).
     user_id = os.environ.get("THREADS_USER_ID") or "me"
     access_token = (
@@ -256,10 +280,20 @@ def main() -> None:
     print(f"[{now:%Y-%m-%d %H:%M KST}] Day {idx + 1}/{len(CALENDAR)} · 주제: {topic['name']}")
 
     override = os.environ.get("POST_TEXT_OVERRIDE", "").strip()
+    used_queue = False
     if override:
         print("[POST_TEXT_OVERRIDE] Claude 생성 대신 주어진 글을 사용합니다 (Anthropic API 미사용).")
         text = override
+    elif queued:
+        head = queued[0]
+        print(
+            f"[큐] 미리 작성해둔 글을 사용합니다 (Anthropic API 미사용). "
+            f"예정일 {head.get('date', '-')} · 주제 {head.get('topic', '-')} · 남은 글 {len(queued)}건."
+        )
+        text = head["text"]
+        used_queue = True
     else:
+        print("[큐 비어 있음] Claude API로 글을 생성합니다.")
         text = generate_post(topic, now)
     print("=== 생성된 글 ===")
     print(text)
@@ -271,6 +305,9 @@ def main() -> None:
 
     post_id = post_to_threads(user_id, access_token, text)
     print(f"게시 완료. Threads 게시물 ID: {post_id}")
+
+    if used_queue:
+        pop_queue()
 
 
 if __name__ == "__main__":

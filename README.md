@@ -1,7 +1,8 @@
 # 오산디에스치과 스레드 자동화 (GitHub Actions 버전)
 
 **매일 저녁 17~19시(KST) 사이 매번 다른 시각**에 GitHub Actions가 클라우드에서 실행되어,
-Claude로 스레드 글을 작성하고 Threads에 자동 게시하는 무료 자동화입니다.
+미리 작성해둔 글 큐(`queue.json`)에서 하루 1건씩 꺼내 Threads에 자동 게시합니다.
+큐가 비면 Claude API로 생성하는 방식으로 자동 폴백합니다(이때만 Anthropic 크레딧 필요).
 **내 맥이 꺼져 있어도 동작합니다.**
 
 - 리포지토리: `scalemaker-ship-it/osan-threads`
@@ -12,7 +13,8 @@ Claude로 스레드 글을 작성하고 Threads에 자동 게시하는 무료 �
 
 | 경로 | 역할 |
 |---|---|
-| `threads_post.py` | 오늘 슬롯 확인 → 60일 캘린더에서 오늘 주제 선택 → Claude 글 생성 → Threads 게시 |
+| `threads_post.py` | 오늘 슬롯 확인 → 글 선택(오버라이드 > `queue.json` > Claude 생성) → Threads 게시 → 큐 1건 소진 |
+| `queue.json` | 미리 작성해둔 글 목록 `{"items":[{"date","topic","text"}]}`. 맨 앞부터 소진 |
 | `.github/workflows/threads-daily.yml` | 17~19시 6개 슬롯 크론 + 수동 실행(드라이런 옵션) |
 | `requirements.txt` | 파이썬 패키지 (anthropic, requests) |
 | `.env.example` | 로컬 실행용 환경변수 예시 |
@@ -26,7 +28,7 @@ Claude로 스레드 글을 작성하고 Threads에 자동 게시하는 무료 �
 
 | 이름 | 값 | 필수 |
 |---|---|---|
-| `ANTHROPIC_API_KEY` | Anthropic 콘솔 API 키 (`console.anthropic.com`) | ✅ |
+| `ANTHROPIC_API_KEY` | Anthropic 콘솔 API 키. **큐가 비었을 때만 필요** | ⬜ |
 | `THREADS_USER_ID` | Threads 사용자 ID | 실제 발행 시 |
 | `THREADS_ACCESS_TOKEN` | Threads 장기(long-lived) 액세스 토큰 | 실제 발행 시 |
 | `DRY_RUN` | `1`이면 글만 생성하고 발행은 건너뜀 (테스트용) | ⬜ |
@@ -64,7 +66,8 @@ python threads_post.py
 ## 참고
 
 - 모델: `claude-opus-4-8`.
-- Claude API는 사용량 과금이나 하루 1회 짧은 글만 생성하므로 비용은 매우 적습니다. Threads API는 무료.
+- 큐로 발행하는 동안은 **비용 0원**입니다(Threads API 무료, Anthropic 호출 없음).
+- 큐가 떨어지면 Claude 생성으로 넘어가며 이때만 Anthropic 크레딧이 듭니다. 큐는 `python3 -c "import json;print(len(json.load(open('queue.json'))['items']))"` 로 잔량 확인.
 - 시간대·슬롯 변경은 `.github/workflows/threads-daily.yml`의 `cron` 값과 `threads_post.py`의 `SLOT_CRONS`를 **같이** 수정 (문자열이 정확히 일치해야 함, UTC 기준).
 - 주제 캘린더는 `threads_post.py`의 `CALENDAR`(60개) 수정. 시작일은 `ANCHOR`.
 - Threads 액세스 토큰은 약 60일 후 만료됩니다(60일치 캘린더와 주기가 맞음). 만료 시 `THREADS_ACCESS_TOKEN` Secret을 갱신하세요.
