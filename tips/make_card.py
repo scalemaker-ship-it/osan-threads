@@ -89,11 +89,90 @@ def render(title: str, items: list[str], out: str, mark: str = "x", footer: str 
     print(out)
 
 
+def render_quote(headline: str, sub: str, out: str, label: str = "오늘의 치아 상식",
+                 footer: str = "오산디에스치과"):
+    """단일 팁 카드: 큰 한 문장 + 짧은 부연."""
+    img = Image.new("RGB", (W, H), BG)
+    d = ImageDraw.Draw(img)
+    pad = 92
+    max_w = W - pad * 2
+
+    lf = font("SemiBold", 34)
+    d.text((pad, 112), label, font=lf, fill=MINT)
+
+    # 큰 문장 — 어절 단위로 줄바꿈, 줄 수에 맞춰 크기 자동 조절
+    size = 76
+    while size > 34:
+        f = font("Bold", size)
+        lines, cur = [], ""
+        for w in headline.split():
+            t = (cur + " " + w).strip()
+            if d.textlength(t, font=f) <= max_w:
+                cur = t
+            else:
+                if cur:
+                    lines.append(cur)
+                cur = w
+        if cur:
+            lines.append(cur)
+        if len(lines) <= 4:
+            break
+        size -= 4
+
+    # 제목+구분선+부연 블록을 세로 중앙에 놓는다
+    sf_probe = font("Medium", 40)
+    sub_lines = 0
+    if sub:
+        cur = ""
+        for w in sub.split():
+            t = (cur + " " + w).strip()
+            if d.textlength(t, font=sf_probe) <= max_w:
+                cur = t
+            else:
+                sub_lines += 1
+                cur = w
+        if cur:
+            sub_lines += 1
+    block_h = (len(lines) * int(f.size * 1.34)) + 26 + 8 + 56 + int(sub_lines * sf_probe.size * 1.42)
+    y = max(236, (H - block_h) // 2 + 20)
+    for ln in lines:
+        d.text((pad, y), ln, font=f, fill=INK)
+        y += int(f.size * 1.34)
+
+    y += 26
+    d.rounded_rectangle([pad, y, pad + 132, y + 8], radius=4, fill=MINT)
+    y += 56
+
+    if sub:
+        sf = font("Medium", 40)
+        cur = ""
+        for w in sub.split():
+            t = (cur + " " + w).strip()
+            if d.textlength(t, font=sf) <= max_w:
+                cur = t
+            else:
+                d.text((pad, y), cur, font=sf, fill=(96, 102, 108))
+                y += int(sf.size * 1.42)
+                cur = w
+        if cur:
+            d.text((pad, y), cur, font=sf, fill=(96, 102, 108))
+
+    d.text((pad, H - 100), footer, font=font("Medium", 30), fill=GRAY)
+    os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
+    img.save(out, "PNG")
+    print(out)
+
+
 if __name__ == "__main__":
     p = argparse.ArgumentParser()
+    p.add_argument("--mode", default="list", choices=["list", "quote"])
     p.add_argument("--title", required=True)
-    p.add_argument("--items", nargs="+", required=True)
+    p.add_argument("--items", nargs="*", default=[])
+    p.add_argument("--sub", default="")
     p.add_argument("--out", required=True)
     p.add_argument("--mark", default="x", choices=["x", "check", "none"])
     a = p.parse_args()
-    render(a.title, a.items, a.out, None if a.mark == "none" else a.mark)
+    if a.mode == "quote":
+        render_quote(a.title, a.sub, a.out)
+    else:
+        render(a.title, a.items, a.out, None if a.mark == "none" else a.mark)
