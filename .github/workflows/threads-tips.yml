@@ -1,0 +1,56 @@
+name: 오산 치아관리 꿀팁 게시
+
+# 매일 저녁 20~22시(KST) 사이 여러 슬롯에서 실행되고,
+# 스크립트가 '오늘 배정된 슬롯' 한 번에서만 실제로 발행한다(발행 시각이 매일 달라짐).
+# GitHub Actions 크론은 UTC 기준(KST = UTC + 9).
+on:
+  schedule:
+    - cron: "7 11 * * *"     # 20:07 KST
+    - cron: "33 11 * * *"    # 20:33 KST
+    - cron: "2 12 * * *"     # 21:02 KST
+    - cron: "26 12 * * *"    # 21:26 KST
+    - cron: "48 12 * * *"    # 21:48 KST
+    - cron: "58 12 * * *"    # 21:58 KST
+  workflow_dispatch:         # 수동 실행 (슬롯 검사 없이 바로 발행)
+    inputs:
+      dry_run:
+        description: "드라이런(글만 출력, 발행 안 함)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write   # 발행 후 tips_queue.json 소진분 커밋
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 패키지 설치
+        run: pip install -r requirements.txt
+
+      - name: 꿀팁 게시
+        env:
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+          SCHEDULE_CRON: ${{ github.event.schedule }}
+        run: python tips/tips_post.py
+
+      - name: 소진한 큐 커밋
+        if: success()
+        run: |
+          if git diff --quiet -- tips/tips_queue.json; then
+            echo "큐 변경 없음. 커밋 생략."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tips/tips_queue.json
+          git commit -m "꿀팁 큐 1건 소진 (자동 발행)"
+          git push
