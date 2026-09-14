@@ -1,0 +1,65 @@
+name: 오산 스레드 게시 (화·목·토 19시)
+
+# 화·목·토 저녁 19~20시(KST) 사이 여러 분(分) 슬롯에서 실행되고,
+# 스크립트가 '오늘 배정된 슬롯' 한 번에서만 실제로 발행한다(발행 분이 매번 달라짐).
+#   화·토 = 정보성(생활 치아관리 꿀팁)  info_queue.json
+#   목    = 일상·소통(오산/동탄/평택/수원 이웃) daily_queue.json
+# GitHub Actions 크론은 UTC 기준(KST = UTC + 9). 요일: 2=화, 4=목, 6=토 (KST 19시 = UTC 10시, 같은 날).
+on:
+  schedule:
+    - cron: "2 10 * * 2,4,6"     # 19:02 KST
+    - cron: "14 10 * * 2,4,6"    # 19:14 KST
+    - cron: "23 10 * * 2,4,6"    # 19:23 KST
+    - cron: "35 10 * * 2,4,6"    # 19:35 KST
+    - cron: "47 10 * * 2,4,6"    # 19:47 KST
+    - cron: "56 10 * * 2,4,6"    # 19:56 KST
+  workflow_dispatch:             # 수동 실행 (슬롯 검사 없이 바로 발행)
+    inputs:
+      dry_run:
+        description: "드라이런(글만 출력, Threads 발행 안 함)"
+        type: boolean
+        default: false
+      track:
+        description: "트랙 강제 지정 (비우면 오늘 요일로 판단: 화·토=info, 목=daily, 그 외 요일=발행 안 함)"
+        type: choice
+        options: ["", "info", "daily"]
+        default: ""
+
+permissions:
+  contents: write   # 발행 후 큐 소진분 커밋
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 패키지 설치
+        run: pip install -r requirements.txt
+
+      - name: 스레드 게시
+        env:
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+          SCHEDULE_CRON: ${{ github.event.schedule }}
+          TRACK_OVERRIDE: ${{ github.event.inputs.track }}
+        run: python post.py
+
+      - name: 소진한 큐 커밋
+        if: success()
+        run: |
+          if git diff --quiet -- info_queue.json daily_queue.json; then
+            echo "큐 변경 없음 (발행 안 함). 커밋 생략."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add info_queue.json daily_queue.json
+          git commit -m "큐 1건 소진 (자동 발행)"
+          git pull --rebase -q || true
+          git push

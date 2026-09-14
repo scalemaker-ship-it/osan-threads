@@ -1,73 +1,62 @@
-# 오산디에스치과 스레드 자동화 (GitHub Actions 버전)
+# 오산디에스치과 스레드 자동화 (GitHub Actions)
 
-**매일 저녁 17~19시(KST) 사이 매번 다른 시각**에 GitHub Actions가 클라우드에서 실행되어,
-미리 작성해둔 글 큐(`queue.json`)에서 하루 1건씩 꺼내 Threads에 자동 게시합니다.
-큐가 비면 Claude API로 생성하는 방식으로 자동 폴백합니다(이때만 Anthropic 크레딧 필요).
-**내 맥이 꺼져 있어도 동작합니다.**
+**화·목·토 저녁 19~20시(KST), 하루 1건, 텍스트만(이미지 카드 없음).**
+미리 작성해둔 큐에서 1건씩 꺼내 Threads에 자동 게시합니다. Anthropic 크레딧 0으로 동작하며, 내 맥이 꺼져 있어도 돌아갑니다.
 
 - 리포지토리: `scalemaker-ship-it/osan-threads`
-- 스케줄: 매일 1회, 17~19시 KST 6개 슬롯(17:03·17:27·17:44·18:09·18:31·18:52) 중 날짜별로 하나
-- 콘텐츠: 60일치 주제 캘린더를 날짜 순서대로 하나씩 순환 (일상 30 · 정보 24 · 홍보 6)
+- 트랙(요일로 결정)
+
+| 요일 | 트랙 | 큐 파일 | 내용 |
+|---|---|---|---|
+| 화·토 | `info` 정보성 | `info_queue.json` | 생활 치아관리 꿀팁. 친근한 궁금증형(제로콜라 vs 오렌지주스, 떡은 치아에 안 좋을까, 임신 중 치아관리…) |
+| 목 | `daily` 일상·소통 | `daily_queue.json` | 오산/동탄/평택/수원 이웃 타겟 완전 소통글. 월수금 야간진료·토요일 진료, 병원 분위기, 동네 맛집 질문 등 |
+| 그 외 | 발행 없음 | | |
+
+- 발행 시각: 19:02·19:14·19:23·19:35·19:47·19:56 여섯 슬롯 중 날짜 해시로 하나 → 매번 분이 달라짐 (GitHub 크론 자체 지연 수 분 추가될 수 있음)
+- 글 형식: 본문(`main`) + 선택 답글(`reply`, 마무리 질문·부연). 해시태그 없음, 이모지 최대 1개, 부드러운 존댓말
 
 ## 구조
 
 | 경로 | 역할 |
 |---|---|
-| `threads_post.py` | 오늘 슬롯 확인 → 글 선택(오버라이드 > `queue.json` > Claude 생성) → Threads 게시 → 큐 1건 소진 |
-| `queue.json` | 미리 작성해둔 글 목록 `{"items":[{"date","topic","text"}]}`. 맨 앞부터 소진 |
-| `.github/workflows/threads-daily.yml` | 17~19시 6개 슬롯 크론 + 수동 실행(드라이런 옵션) |
-| `requirements.txt` | 파이썬 패키지 (anthropic, requests) |
-| `.env.example` | 로컬 실행용 환경변수 예시 |
-
-### 발행 시각이 매일 달라지는 방식
-비공개 레포라 Actions 사용시간을 아끼기 위해, 긴 `sleep` 대신 **여러 시간 슬롯을 크론으로 등록**하고
-스크립트가 날짜 해시로 오늘의 슬롯 하나만 골라 그때만 발행합니다(`SCHEDULE_CRON`으로 판별).
-나머지 슬롯 실행은 몇 초 만에 종료됩니다.
+| `post.py` | 오늘 슬롯 확인 → 요일로 트랙 결정 → 해당 큐 맨 앞 1건 게시(본문→답글) → 큐 소진 |
+| `info_queue.json` | 정보성 큐 `{"items":[{"date","topic","main","reply"}]}` |
+| `daily_queue.json` | 일상·소통 큐 (같은 형식) |
+| `.github/workflows/threads-weekly.yml` | 화·목·토 19시대 6슬롯 크론 + 수동 실행(드라이런·트랙 강제) |
+| `archive/` | 이전 트랙(매일 17~19시 `threads_post.py`+`queue.json`, 20~22시 꿀팁 `tips/`) 보관. 워크플로 없음 = 실행 안 됨 |
 
 ## 환경변수 (= GitHub Secrets)
 
 | 이름 | 값 | 필수 |
 |---|---|---|
-| `ANTHROPIC_API_KEY` | Anthropic 콘솔 API 키. **큐가 비었을 때만 필요** | ⬜ |
-| `THREADS_USER_ID` | Threads 사용자 ID | 실제 발행 시 |
-| `THREADS_ACCESS_TOKEN` | Threads 장기(long-lived) 액세스 토큰 | 실제 발행 시 |
-| `DRY_RUN` | `1`이면 글만 생성하고 발행은 건너뜀 (테스트용) | ⬜ |
+| `THREADS_ACCESS_TOKEN` | Threads 장기 액세스 토큰(약 60일 만료) | 실제 발행 시 |
+| `THREADS_USER_ID` | Threads 사용자 ID (없으면 `me`) | ⬜ |
+| `DRY_RUN` | `1`이면 출력만 하고 발행 안 함 | ⬜ |
+| `TRACK_OVERRIDE` | `info`/`daily` 로 요일 판단 덮어쓰기(수동 실행용) | ⬜ |
 
-> 세 Secret은 리포지토리 → **Settings → Secrets and variables → Actions → New repository secret** 에 등록합니다.
+## 테스트 / 수동 실행
 
-## 동작 테스트
-
-리포지토리 → **Actions** 탭 → "오산 스레드 자동 게시" → **Run workflow**:
-- **드라이런 체크 ON**: `ANTHROPIC_API_KEY`만 있으면 글 생성까지만 검증 (Threads 발행 안 함).
-- **드라이런 OFF**: 세 Secret이 모두 있어야 실제로 Threads에 게시됩니다.
-
-로그에 "게시 완료. Threads 게시물 ID: ..."가 뜨면 성공입니다.
-
-CLI로도 가능:
 ```bash
-# 드라이런
-gh workflow run "오산 스레드 자동 게시" --repo scalemaker-ship-it/osan-threads -f dry_run=true
-# 실제 발행
-gh workflow run "오산 스레드 자동 게시" --repo scalemaker-ship-it/osan-threads
-# 결과 확인
+# 로컬 드라이런 (자격증명 불필요)
+python3 post.py --dry-run --track info
+python3 post.py --dry-run --track daily
+
+# Actions 드라이런 / 실제 발행
+gh workflow run "오산 스레드 게시 (화·목·토 19시)" --repo scalemaker-ship-it/osan-threads -f dry_run=true -f track=info
+gh workflow run "오산 스레드 게시 (화·목·토 19시)" --repo scalemaker-ship-it/osan-threads -f track=daily
 gh run list --repo scalemaker-ship-it/osan-threads --limit 3
 ```
+수동 실행은 슬롯 검사 없이 즉시 발행합니다. `track`을 비우면 오늘 요일로 판단하며 화·목·토가 아니면 발행하지 않습니다.
 
-## 로컬에서 직접 실행
+## 큐 채우기 규칙
 
-```bash
-cp .env.example .env      # 값 채우기
-pip install -r requirements.txt
-set -a && source .env && set +a
-python threads_post.py
-```
-`DRY_RUN=1`을 넣으면 Threads 자격증명 없이 글 생성만 확인할 수 있습니다.
+- `date`는 표시용(발행은 항상 맨 앞부터). 화·토 날짜만 `info_queue.json`에, 목 날짜만 `daily_queue.json`에 넣어 순서가 어긋나지 않게 유지
+- 정보 트랙: 첫 줄 궁금증 훅 → 이유 2~3문장 → 실천 한 줄. 의학적 단정("100%", "완치") 금지, 필요 시 "상담받아 보세요"로 마무리
+- 일상 트랙: 치과 정보 넣지 않음. 지역명(오산·동탄·평택·수원)·계절·질문으로 댓글 유도. 병원 사실은 **월수금 야간진료·토요일 진료·교정 전문 원장** 범위 안에서만
+- 잔량 확인: `python3 -c "import json;[print(f,len(json.load(open(f))['items'])) for f in ('info_queue.json','daily_queue.json')]"`
+- 큐가 비면 워크플로가 실패로 표시됨(알림 겸용). 현재 큐: 2026-09-15 ~ 12-05 (12주)
 
 ## 참고
 
-- 모델: `claude-opus-4-8`.
-- 큐로 발행하는 동안은 **비용 0원**입니다(Threads API 무료, Anthropic 호출 없음).
-- 큐가 떨어지면 Claude 생성으로 넘어가며 이때만 Anthropic 크레딧이 듭니다. 큐는 `python3 -c "import json;print(len(json.load(open('queue.json'))['items']))"` 로 잔량 확인.
-- 시간대·슬롯 변경은 `.github/workflows/threads-daily.yml`의 `cron` 값과 `threads_post.py`의 `SLOT_CRONS`를 **같이** 수정 (문자열이 정확히 일치해야 함, UTC 기준).
-- 주제 캘린더는 `threads_post.py`의 `CALENDAR`(60개) 수정. 시작일은 `ANCHOR`.
-- Threads 액세스 토큰은 약 60일 후 만료됩니다(60일치 캘린더와 주기가 맞음). 만료 시 `THREADS_ACCESS_TOKEN` Secret을 갱신하세요.
+- 시간대·슬롯 변경은 `threads-weekly.yml`의 `cron`과 `post.py`의 `SLOT_CRONS`를 **같이** 수정(문자열이 정확히 일치해야 함, UTC 기준)
+- Threads 토큰 만료 시 `THREADS_ACCESS_TOKEN` Secret 갱신(재발급 절차는 메모리 `osan-threads-token` 참고)
