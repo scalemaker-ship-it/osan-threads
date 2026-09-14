@@ -22,6 +22,7 @@
 | `post.py` | 오늘 슬롯 확인 → 요일로 트랙 결정 → 해당 큐 맨 앞 1건 게시(본문→답글) → 큐 소진 |
 | `info_queue.json` | 정보성 큐 `{"items":[{"date","topic","main","reply"}]}` |
 | `daily_queue.json` | 일상·소통 큐 (같은 형식) |
+| `pinned_posts.json` | **날짜 예약글**(명절 등, 요일 무관). `date == 오늘` 항목을 그 날짜 전용 크론(예: `"23 10 25 9 *"` = 9/25 19:23)에서 발행. 예약글 추가 시 워크플로에 전용 크론도 함께 추가 |
 | `.github/workflows/threads-weekly.yml` | 화·목·토 19시대 6슬롯 크론 + 수동 실행(드라이런·트랙 강제) |
 | `archive/` | 이전 트랙(매일 17~19시 `threads_post.py`+`queue.json`, 20~22시 꿀팁 `tips/`) 보관. 워크플로 없음 = 실행 안 됨 |
 
@@ -57,7 +58,7 @@ gh run list --repo scalemaker-ship-it/osan-threads --limit 3
   - 공통: 의학적 단정("100%", "완치") 금지, 필요 시 "상담받아 보세요"로 마무리
 - 일상 트랙: 치과 정보 넣지 않음. 지역명(오산·동탄·평택·수원)·계절·질문으로 댓글 유도. 병원 사실은 **월수금 야간진료·토요일 진료·교정 전문 원장** 범위 안에서만
 - 잔량 확인: `python3 -c "import json;[print(f,len(json.load(open(f))['items'])) for f in ('info_queue.json','daily_queue.json')]"`
-- 큐가 비면 워크플로가 실패로 표시됨(알림 겸용). 현재 큐: 2026-09-15 ~ 12-05 (12주)
+- 큐가 비면 워크플로가 실패로 표시됨(알림 겸용). 현재 큐: 2026-09-15 ~ 12-05 (12주) + 예약글 9/25 추석
 
 ## 참고
 

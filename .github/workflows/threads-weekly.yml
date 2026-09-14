@@ -13,6 +13,8 @@ on:
     - cron: "35 10 * * 2,4,6"    # 19:35 KST
     - cron: "47 10 * * 2,4,6"    # 19:47 KST
     - cron: "56 10 * * 2,4,6"    # 19:56 KST
+    # 날짜 예약글(pinned_posts.json) 전용 — 요일 무관, 슬롯 검사 없이 그날 예약글 발행
+    - cron: "23 10 25 9 *"       # 2026-09-25(추석) 19:23 KST
   workflow_dispatch:             # 수동 실행 (슬롯 검사 없이 바로 발행)
     inputs:
       dry_run:
@@ -20,9 +22,9 @@ on:
         type: boolean
         default: false
       track:
-        description: "트랙 강제 지정 (비우면 오늘 요일로 판단: 화·토=info, 목=daily, 그 외 요일=발행 안 함)"
+        description: "트랙 강제 지정 (비우면 오늘 요일로 판단: 화·토=info, 목=daily, pinned=오늘 날짜 예약글)"
         type: choice
-        options: ["", "info", "daily"]
+        options: ["", "info", "daily", "pinned"]
         default: ""
 
 permissions:
@@ -53,13 +55,13 @@ jobs:
       - name: 소진한 큐 커밋
         if: success()
         run: |
-          if git diff --quiet -- info_queue.json daily_queue.json; then
+          if git diff --quiet -- info_queue.json daily_queue.json pinned_posts.json; then
             echo "큐 변경 없음 (발행 안 함). 커밋 생략."
             exit 0
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add info_queue.json daily_queue.json
+          git add info_queue.json daily_queue.json pinned_posts.json
           git commit -m "큐 1건 소진 (자동 발행)"
           git pull --rebase -q || true
           git push

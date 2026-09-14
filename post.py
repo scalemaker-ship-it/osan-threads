@@ -7,6 +7,7 @@
   그 외  발행 안 함
 
 큐 형식: {"items": [{"date", "topic", "main", "reply"?}, ...]}  맨 앞부터 소진.
+날짜 예약글: pinned_posts.json (같은 형식). 요일 무관하게 date == 오늘인 글을 그 날짜 전용 크론에서 발행.
   main  = 본문(텍스트 게시물)
   reply = 있으면 본문에 이어 답글로 게시(마무리 질문·부연). 없으면 본문만.
 
@@ -16,7 +17,7 @@
 환경변수:
   THREADS_ACCESS_TOKEN  필수(드라이런 제외)   THREADS_USER_ID 선택(기본 "me")
   DRY_RUN=1             발행 없이 출력만
-  TRACK_OVERRIDE        info / daily 로 요일 판단을 덮어씀(수동 실행용)
+  TRACK_OVERRIDE        info / daily / pinned 로 요일 판단을 덮어씀(수동 실행용)
   GITHUB_EVENT_NAME, SCHEDULE_CRON  Actions가 주입(슬롯 게이팅)
 로컬: python post.py --dry-run [--track info|daily]
 """
@@ -52,7 +53,11 @@ QUEUE_FILES = {
     "info": os.path.join(HERE, "info_queue.json"),
     "daily": os.path.join(HERE, "daily_queue.json"),
 }
-TRACK_LABEL = {"info": "정보성(치아관리 꿀팁)", "daily": "일상·소통"}
+TRACK_LABEL = {"info": "정보성(치아관리 꿀팁)", "daily": "일상·소통", "pinned": "날짜 예약글"}
+
+# 날짜 예약글(요일 무관, 명절 등): pinned_posts.json 의 date == 오늘 항목을 발행한다.
+# 워크플로에 그 날짜 전용 크론(예: "23 10 25 9 *")을 추가하면 슬롯 검사를 건너뛰고 바로 발행한다.
+PINNED_FILE = os.path.join(HERE, "pinned_posts.json")
 
 
 def chosen_slot_cron(now: datetime) -> str:
@@ -134,10 +139,21 @@ def main() -> None:
 
     now = datetime.now(KST)
 
+    today = now.strftime("%Y-%m-%d")
+    pinned = load_items(PINNED_FILE)
+    pinned_today = [p for p in pinned if p.get("date") == today]
+    current = os.environ.get("SCHEDULE_CRON", "").strip()
+    is_pinned_cron = current not in SLOT_CRONS and current != ""
+
     # 예약 실행이면 오늘 배정된 슬롯 한 번에서만 발행한다(수동·로컬 실행은 검사 없이 진행).
-    if os.environ.get("GITHUB_EVENT_NAME", "") == "schedule":
+    # 날짜 전용 크론(pinned)은 슬롯 검사 없이 그날 예약글을 발행한다.
+    if os.environ.get("GITHUB_EVENT_NAME", "") == "schedule" and is_pinned_cron:
+        if not pinned_today:
+            print(f"[{today}] 날짜 전용 크론 {current!r} 이지만 오늘 예약글이 없습니다. 종료합니다.")
+            return
+        track = "pinned"
+    elif os.environ.get("GITHUB_EVENT_NAME", "") == "schedule":
         target = chosen_slot_cron(now)
-        current = os.environ.get("SCHEDULE_CRON", "").strip()
         if current != target:
             print(f"[{now:%Y-%m-%d %H:%M KST}] 오늘 발행 슬롯이 아닙니다 "
                   f"(이 실행 {current!r} ≠ 오늘 배정 {target!r}). 종료합니다.")
@@ -146,16 +162,22 @@ def main() -> None:
 
     if not track:
         track = TRACK_BY_WEEKDAY.get(now.weekday(), "")
-    if track not in QUEUE_FILES:
+    if track == "pinned" or (track == "" and pinned_today):
+        track = "pinned"
+    if track != "pinned" and track not in QUEUE_FILES:
         print(f"[{now:%Y-%m-%d %a}] 발행 요일이 아닙니다(화·토=정보, 목=일상). 종료합니다.")
         return
 
-    path = QUEUE_FILES[track]
-    items = load_items(path)
-    if not items:
-        sys.exit(f"[큐 비어 있음] {os.path.basename(path)} 에 발행할 글이 없습니다. 큐를 채워주세요.")
-
-    item = items[0]
+    if track == "pinned":
+        if not pinned_today:
+            sys.exit(f"[예약글 없음] pinned_posts.json 에 {today} 항목이 없습니다.")
+        path, items, item = PINNED_FILE, pinned, pinned_today[0]
+    else:
+        path = QUEUE_FILES[track]
+        items = load_items(path)
+        if not items:
+            sys.exit(f"[큐 비어 있음] {os.path.basename(path)} 에 발행할 글이 없습니다. 큐를 채워주세요.")
+        item = items[0]
     print(f"[{TRACK_LABEL[track]}] 예정일 {item.get('date', '-')} · 주제: {item.get('topic', '-')}"
           f" · 남은 글 {len(items)}건")
     print("=== 본문 ===\n" + item["main"])
@@ -171,8 +193,9 @@ def main() -> None:
     uid = os.environ.get("THREADS_USER_ID") or "me"
 
     post_one(uid, tok, item)
-    save_items(path, items[1:])
-    print(f"[큐] 1건 소진. 남은 글 {len(items) - 1}건.")
+    remaining = [i for i in items if i is not item]
+    save_items(path, remaining)
+    print(f"[큐] 1건 소진. 남은 글 {len(remaining)}건.")
 
 
 if __name__ == "__main__":
