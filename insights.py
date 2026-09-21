@@ -149,7 +149,8 @@ def main() -> None:
 
 
 def write_report(payload: dict) -> None:
-    rows = [r for r in payload["posts"] if "error" not in r]
+    # 본문이 빈 항목(삭제된 글 등)은 조회수 0으로 잡혀 평균을 망친다. 제외한다.
+    rows = [r for r in payload["posts"] if "error" not in r and (r.get("text") or "").strip()]
     scored = sorted(rows, key=lambda r: r.get("views", 0), reverse=True)
 
     def eng(r: dict) -> int:
