@@ -2,8 +2,8 @@
 """오산디에스치과 스레드 자동 게시 — 화·목·토 19시대, 하루 1건, 텍스트만(이미지 없음).
 
 트랙(요일로 결정):
-  화·토  info   정보성 — 생활 치아관리 꿀팁 (info_queue.json)
-  목     daily  일상·소통 — 오산/동탄/평택/수원 이웃 대상 수다글 (daily_queue.json)
+  화     info   정보성 — 생활 치아관리 꿀팁 (info_queue.json)
+  목·토  daily  일상·소통 — 오산/동탄/평택/수원 이웃 대상 수다글 (daily_queue.json)
   그 외  발행 안 함
 
 큐 형식: {"items": [{"date", "topic", "main", "reply"?}, ...]}  맨 앞부터 소진.
@@ -46,7 +46,9 @@ WINDOW_END = (20, 30)     # 20:30 KST (크론 지연 여유)
 POSTED_LOG = os.path.join(HERE, "posted_log.json")
 
 # weekday(): 월0 화1 수2 목3 금4 토5 일6
-TRACK_BY_WEEKDAY = {1: "info", 5: "info", 3: "daily"}
+# 성과 데이터상 참여율 상위 글이 전부 일상·감정글이라(댓글 24·13·8·7) 주 3회 중 2회를
+# 일상으로 돌린다. 치과 정보글은 조회가 2,700 나와도 참여율 0.1~2.6%에서 안 올라갔다.
+TRACK_BY_WEEKDAY = {1: "info", 3: "daily", 5: "daily"}
 QUEUE_FILES = {
     "info": os.path.join(HERE, "info_queue.json"),
     "daily": os.path.join(HERE, "daily_queue.json"),
@@ -205,7 +207,7 @@ def main() -> None:
     if not track:
         track = TRACK_BY_WEEKDAY.get(now.weekday(), "")
     if track != "pinned" and track not in QUEUE_FILES:
-        print(f"[{now:%Y-%m-%d %a}] 발행 요일이 아닙니다(화·토=정보, 목=일상). 종료합니다.")
+        print(f"[{now:%Y-%m-%d %a}] 발행 요일이 아닙니다(화=정보, 목·토=일상). 종료합니다.")
         return
 
     if track == "pinned":
