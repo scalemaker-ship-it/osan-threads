@@ -11,8 +11,10 @@
   main  = 본문(텍스트 게시물)
   reply = 있으면 본문에 이어 답글로 게시(마무리 질문·부연). 없으면 본문만.
 
-발행 시각: 워크플로 크론이 19~20시 KST 사이 여러 분(分) 슬롯에서 실행되고,
-날짜 해시로 정한 '오늘의 슬롯' 한 번에서만 발행한다 → 매번 분이 달라진다.
+발행 시각: GitHub 크론은 수 시간까지 지연되므로 '크론 시각'을 믿지 않는다.
+워크플로는 KST 15~21시대에 15분 간격으로 넓게 깔아두고, 이 스크립트가
+'실제 KST 시각이 발행 창(19:00~20:30) 안인가' + '오늘 이미 발행했는가'로 게이팅한다.
+→ 지연이 있든 없든 창 안에 들어온 첫 실행 한 번만 발행된다(발행 분은 매번 달라짐).
 
 환경변수:
   THREADS_ACCESS_TOKEN  필수(드라이런 제외)   THREADS_USER_ID 선택(기본 "me")
@@ -23,7 +25,6 @@
 """
 from __future__ import annotations
 
-import hashlib
 import json
 import os
 import sys
@@ -37,15 +38,12 @@ KST = ZoneInfo("Asia/Seoul")
 HERE = os.path.dirname(os.path.abspath(__file__))
 API = "https://graph.threads.net/v1.0"
 
-# 워크플로 yml 의 cron 문자열과 정확히 일치해야 한다 (UTC, 19~20시 KST).
-SLOT_CRONS = [
-    "2 10 * * 2,4,6",    # 19:02 KST
-    "14 10 * * 2,4,6",   # 19:14 KST
-    "23 10 * * 2,4,6",   # 19:23 KST
-    "35 10 * * 2,4,6",   # 19:35 KST
-    "47 10 * * 2,4,6",   # 19:47 KST
-    "56 10 * * 2,4,6",   # 19:56 KST
-]
+# 실제 KST 시각 기준 발행 창. 이 안에 들어온 첫 예약 실행에서만 발행한다.
+WINDOW_START = (19, 0)    # 19:00 KST
+WINDOW_END = (20, 30)     # 20:30 KST (크론 지연 여유)
+
+# 발행 기록 — 하루 1건 보장. 창 안에 여러 실행이 들어와도 두 번 올라가지 않는다.
+POSTED_LOG = os.path.join(HERE, "posted_log.json")
 
 # weekday(): 월0 화1 수2 목3 금4 토5 일6
 TRACK_BY_WEEKDAY = {1: "info", 5: "info", 3: "daily"}
@@ -60,10 +58,30 @@ TRACK_LABEL = {"info": "정보성(치아관리 꿀팁)", "daily": "일상·소�
 PINNED_FILE = os.path.join(HERE, "pinned_posts.json")
 
 
-def chosen_slot_cron(now: datetime) -> str:
-    """오늘 발행할 분 슬롯을 날짜 해시로 정한다."""
-    h = int(hashlib.sha256(("osan-" + now.strftime("%Y-%m-%d")).encode()).hexdigest(), 16)
-    return SLOT_CRONS[h % len(SLOT_CRONS)]
+def in_window(now: datetime) -> bool:
+    """실제 KST 시각이 발행 창 안인가."""
+    return WINDOW_START <= (now.hour, now.minute) <= WINDOW_END
+
+
+def load_posted() -> list[dict]:
+    if not os.path.exists(POSTED_LOG):
+        return []
+    with open(POSTED_LOG, encoding="utf-8") as f:
+        return json.load(f).get("posted", [])
+
+
+def mark_posted(now: datetime, track: str, item: dict, root_id: str) -> None:
+    posted = load_posted()
+    posted.append({
+        "date": now.strftime("%Y-%m-%d"),
+        "at": now.strftime("%Y-%m-%d %H:%M KST"),
+        "track": track,
+        "topic": item.get("topic", "-"),
+        "id": root_id,
+    })
+    with open(POSTED_LOG, "w", encoding="utf-8") as f:
+        json.dump({"posted": posted[-120:]}, f, ensure_ascii=False, indent=2)
+        f.write("\n")
 
 
 def load_items(path: str) -> list[dict]:
@@ -101,13 +119,35 @@ def wait_ready(cid: str, tok: str, tries: int = 12) -> None:
         time.sleep(5)
 
 
-def publish(uid: str, tok: str, cid: str) -> str:
-    r = requests.post(
-        f"{API}/{uid}/threads_publish", json={"creation_id": cid, "access_token": tok}, timeout=60
-    )
-    if not r.ok:
-        sys.exit(f"[publish 실패] {r.status_code} {r.text[:400]}")
-    return r.json()["id"]
+def publish(uid: str, tok: str, cid: str, tries: int = 5) -> str:
+    """컨테이너를 실제 게시한다.
+
+    컨테이너가 FINISHED 여도 publish 가 곧바로 'Media Not Found'(code 24,
+    subcode 4279009) 로 실패하는 일이 있다(2026-09-17 목요일 미발행 원인).
+    서버 쪽 전파 지연이라 잠깐 기다렸다 다시 부르면 대개 통과한다.
+    """
+    delay = 5
+    for i in range(tries):
+        r = requests.post(
+            f"{API}/{uid}/threads_publish",
+            json={"creation_id": cid, "access_token": tok},
+            timeout=60,
+        )
+        if r.ok:
+            return r.json()["id"]
+
+        body = r.text[:400]
+        try:
+            err = r.json().get("error", {})
+        except ValueError:
+            err = {}
+        transient = err.get("error_subcode") == 4279009 or err.get("is_transient") or r.status_code >= 500
+        if not transient or i == tries - 1:
+            sys.exit(f"[publish 실패] {r.status_code} {body}")
+        print(f"  publish 일시 실패({i + 1}/{tries}), {delay}초 후 재시도: {body}")
+        time.sleep(delay)
+        delay *= 2
+    raise AssertionError("unreachable")
 
 
 def post_one(uid: str, tok: str, item: dict) -> str:
@@ -142,28 +182,28 @@ def main() -> None:
     today = now.strftime("%Y-%m-%d")
     pinned = load_items(PINNED_FILE)
     pinned_today = [p for p in pinned if p.get("date") == today]
-    current = os.environ.get("SCHEDULE_CRON", "").strip()
-    is_pinned_cron = current not in SLOT_CRONS and current != ""
 
-    # 예약 실행이면 오늘 배정된 슬롯 한 번에서만 발행한다(수동·로컬 실행은 검사 없이 진행).
-    # 날짜 전용 크론(pinned)은 슬롯 검사 없이 그날 예약글을 발행한다.
-    if os.environ.get("GITHUB_EVENT_NAME", "") == "schedule" and is_pinned_cron:
-        if not pinned_today:
-            print(f"[{today}] 날짜 전용 크론 {current!r} 이지만 오늘 예약글이 없습니다. 종료합니다.")
+    # 예약 실행 게이팅 — 크론 시각이 아니라 '실제 KST 시각'으로 판단한다.
+    # GitHub 크론은 수 시간까지 밀리므로, 창(19:00~20:30) 안에 들어온 첫 실행에서만 발행한다.
+    # 수동 실행(workflow_dispatch)·로컬은 검사 없이 바로 진행한다.
+    if os.environ.get("GITHUB_EVENT_NAME", "") == "schedule":
+        already = [p for p in load_posted() if p.get("date") == today]
+        if already:
+            print(f"[{now:%Y-%m-%d %H:%M KST}] 오늘({today}) 이미 발행했습니다 "
+                  f"({already[-1].get('at')} · {already[-1].get('topic')}). 종료합니다.")
             return
+        if not in_window(now):
+            print(f"[{now:%Y-%m-%d %H:%M KST}] 발행 창"
+                  f"({WINDOW_START[0]:02d}:{WINDOW_START[1]:02d}~"
+                  f"{WINDOW_END[0]:02d}:{WINDOW_END[1]:02d} KST) 밖입니다. 종료합니다.")
+            return
+        print(f"[{now:%Y-%m-%d %H:%M KST}] 발행 창 안이고 오늘 미발행. 진행합니다.")
+
+    # 날짜 예약글이 있으면 요일 트랙보다 우선한다(명절 인사 등).
+    if not track and pinned_today:
         track = "pinned"
-    elif os.environ.get("GITHUB_EVENT_NAME", "") == "schedule":
-        target = chosen_slot_cron(now)
-        if current != target:
-            print(f"[{now:%Y-%m-%d %H:%M KST}] 오늘 발행 슬롯이 아닙니다 "
-                  f"(이 실행 {current!r} ≠ 오늘 배정 {target!r}). 종료합니다.")
-            return
-        print(f"[{now:%Y-%m-%d %H:%M KST}] 오늘의 발행 슬롯 {current!r} 매칭. 진행합니다.")
-
     if not track:
         track = TRACK_BY_WEEKDAY.get(now.weekday(), "")
-    if track == "pinned" or (track == "" and pinned_today):
-        track = "pinned"
     if track != "pinned" and track not in QUEUE_FILES:
         print(f"[{now:%Y-%m-%d %a}] 발행 요일이 아닙니다(화·토=정보, 목=일상). 종료합니다.")
         return
@@ -192,9 +232,10 @@ def main() -> None:
         sys.exit("[오류] THREADS_ACCESS_TOKEN 이 없습니다.")
     uid = os.environ.get("THREADS_USER_ID") or "me"
 
-    post_one(uid, tok, item)
+    root_id = post_one(uid, tok, item)
     remaining = [i for i in items if i is not item]
     save_items(path, remaining)
+    mark_posted(now, track, item, root_id)
     print(f"[큐] 1건 소진. 남은 글 {len(remaining)}건.")
 
 

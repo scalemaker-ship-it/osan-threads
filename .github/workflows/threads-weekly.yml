@@ -1,20 +1,20 @@
 name: 오산 스레드 게시 (화·목·토 19시)
 
-# 화·목·토 저녁 19~20시(KST) 사이 여러 분(分) 슬롯에서 실행되고,
-# 스크립트가 '오늘 배정된 슬롯' 한 번에서만 실제로 발행한다(발행 분이 매번 달라짐).
+# 화·목·토 저녁, 하루 1건.
 #   화·토 = 정보성(생활 치아관리 꿀팁)  info_queue.json
 #   목    = 일상·소통(오산/동탄/평택/수원 이웃) daily_queue.json
-# GitHub Actions 크론은 UTC 기준(KST = UTC + 9). 요일: 2=화, 4=목, 6=토 (KST 19시 = UTC 10시, 같은 날).
+#   날짜 예약글(pinned_posts.json)은 요일 무관하게 그날 우선 발행
+#
+# GitHub 크론은 실제로 수 시간까지 밀린다(실측: 2026-09-15·17·19 모두 3~4시간 지연 →
+# 19시 타겟인데 22~23시에 발행됨). 그래서 '크론 시각'으로 발행을 정하지 않는다.
+# KST 15시대~21시대에 15분 간격으로 넓게 깔아두고, post.py 가
+# '실제 KST 시각이 19:00~20:30 인가' + '오늘 이미 발행했나'로 판단해 한 번만 발행한다.
+# (KST = UTC + 9, 요일 2=화 4=목 6=토)
 on:
   schedule:
-    - cron: "2 10 * * 2,4,6"     # 19:02 KST
-    - cron: "14 10 * * 2,4,6"    # 19:14 KST
-    - cron: "23 10 * * 2,4,6"    # 19:23 KST
-    - cron: "35 10 * * 2,4,6"    # 19:35 KST
-    - cron: "47 10 * * 2,4,6"    # 19:47 KST
-    - cron: "56 10 * * 2,4,6"    # 19:56 KST
-    # 날짜 예약글(pinned_posts.json) 전용 — 요일 무관, 슬롯 검사 없이 그날 예약글 발행
-    - cron: "23 10 25 9 *"       # 2026-09-25(추석) 19:23 KST
+    - cron: "*/15 6-12 * * 2,4,6"   # KST 15:00~21:45, 15분 간격
+    # 날짜 예약글이 화·목·토가 아닌 날이면 그날치 크론을 따로 깔아준다.
+    - cron: "*/15 6-12 25 9 *"      # 2026-09-25(금) 추석 당일 인사
   workflow_dispatch:             # 수동 실행 (슬롯 검사 없이 바로 발행)
     inputs:
       dry_run:
@@ -26,6 +26,11 @@ on:
         type: choice
         options: ["", "info", "daily", "pinned"]
         default: ""
+
+# 지연으로 여러 실행이 한꺼번에 몰려도 순서대로 하나씩 돌게 한다(중복 발행 방지).
+concurrency:
+  group: osan-threads-post
+  cancel-in-progress: false
 
 permissions:
   contents: write   # 발행 후 큐 소진분 커밋
@@ -48,20 +53,19 @@ jobs:
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
           DRY_RUN: ${{ github.event.inputs.dry_run }}
-          SCHEDULE_CRON: ${{ github.event.schedule }}
           TRACK_OVERRIDE: ${{ github.event.inputs.track }}
         run: python post.py
 
       - name: 소진한 큐 커밋
         if: success()
         run: |
-          if git diff --quiet -- info_queue.json daily_queue.json pinned_posts.json; then
+          if git diff --quiet -- info_queue.json daily_queue.json pinned_posts.json posted_log.json; then
             echo "큐 변경 없음 (발행 안 함). 커밋 생략."
             exit 0
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add info_queue.json daily_queue.json pinned_posts.json
+          git add info_queue.json daily_queue.json pinned_posts.json posted_log.json
           git commit -m "큐 1건 소진 (자동 발행)"
           git pull --rebase -q || true
           git push
