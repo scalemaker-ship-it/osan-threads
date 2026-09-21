@@ -26,12 +26,13 @@ jobs:
         run: python insights.py
       - name: 리포트 커밋
         run: |
-          if git diff --quiet -- insights.json insights_report.md; then
-            echo "변경 없음."; exit 0
-          fi
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add insights.json insights_report.md
+          # 새로 생긴 파일은 git diff 로 안 잡히므로 스테이지 후에 비교한다.
+          if git diff --cached --quiet; then
+            echo "변경 없음."; exit 0
+          fi
           git commit -m "성과 리포트 갱신"
           git pull --rebase -q || true
           git push
