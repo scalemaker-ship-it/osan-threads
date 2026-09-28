@@ -1,54 +1,398 @@
 {
-  "collected_at": "2026-09-21 17:09 KST",
-  "followers_count": 758,
+  "collected_at": "2026-09-28 11:03 KST",
+  "followers_count": 774,
   "follower_cities": {
     "Jecheon, Chungcheongbuk-do": 2,
     "Chuncheon, Gangwon-do": 3,
-    "Jinju, Gyeongsangnam-do": 2,
-    "Gwangju, Gwangju": 3,
-    "Daegu, Daegu": 11,
+    "Jeju, Jeju-do": 3,
+    "Daegu, Daegu": 12,
     "Yongin, Gyeonggi-do": 16,
-    "Osan, Gyeonggi-do": 213,
+    "Osan, Gyeonggi-do": 222,
     "Busan, Busan": 20,
-    "Yeoju, Gyeonggi-do": 2,
-    "Seoul, Seoul": 100,
+    "Yeoju, Gyeonggi-do": 3,
+    "Seoul, Seoul": 97,
     "Seosan, Chungcheongnam-do": 2,
     "Yangju, Gyeonggi-do": 3,
-    "Goyang, Gyeonggi-do": 9,
+    "Goyang, Gyeonggi-do": 10,
     "Uiwang-si, Gyeonggi-do": 3,
-    "Pohang, Gyeongsangbuk-do": 2,
     "Namyangju, Gyeonggi-do": 6,
     "Gumi, Gyeongsangbuk-do": 4,
     "Gimpo, Gyeonggi-do": 5,
-    "Sejong, Chungcheongbuk-do": 4,
-    "Iksan, Jeollabuk-do": 5,
-    "Incheon, Incheon": 21,
-    "Guri, Gyeonggi-do": 2,
+    "Hanam, Gyeonggi-do": 2,
+    "Sejong, Chungcheongbuk-do": 3,
+    "Iksan, Jeollabuk-do": 6,
+    "Incheon, Incheon": 19,
     "Jeonju, Jeollabuk-do": 4,
-    "Hwaseong, Gyeonggi-do": 80,
+    "Hwaseong, Gyeonggi-do": 85,
     "Yangsan, Gyeongsangnam-do": 3,
-    "Asan, Chungcheongnam-do": 5,
+    "Asan, Chungcheongnam-do": 6,
     "Daejeon, Daejeon": 12,
-    "Mokpo, Jeollanam-do": 2,
     "Ansan, Gyeonggi-do": 7,
     "Changwon, Gyeongsangnam-do": 4,
     "Anyang, Gyeonggi-do": 5,
-    "Cheonan, Chungcheongnam-do": 7,
+    "Cheonan, Chungcheongnam-do": 6,
     "Cheongju, Chungcheongbuk-do": 4,
     "Bucheon, Gyeonggi-do": 5,
-    "Suwon, Gyeonggi-do": 30,
+    "Suwon, Gyeonggi-do": 28,
     "Gwangju, Gyeonggi-do": 2,
     "Gunsan, Jeollabuk-do": 2,
-    "Ulsan, Ulsan": 3,
-    "Pyeongtaek, Gyeonggi-do": 66,
+    "Anseong, Gyeonggi-do": 2,
+    "Ulsan, Ulsan": 2,
+    "Pyeongtaek, Gyeonggi-do": 69,
+    "Gimhae, Gyeongsangnam-do": 2,
     "Uijeongbu, Gyeonggi-do": 5,
-    "Seongnam, Gyeonggi-do": 9,
+    "Seongnam, Gyeonggi-do": 10,
     "Gunpo, Gyeonggi-do": 2,
     "Siheung, Gyeonggi-do": 10,
-    "Chungju, Chungcheongbuk-do": 2,
-    "Paju, Gyeonggi-do": 5
+    "Gongju, Chungcheongnam-do": 2,
+    "Chungju, Chungcheongbuk-do": 3,
+    "Paju, Gyeonggi-do": 6
   },
   "posts": [
+    {
+      "id": "18096136766409118",
+      "timestamp": "2026-09-28T00:29:43+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/Ddz5mZ2EqpP",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "18125813119854092",
+      "timestamp": "2026-09-28T00:29:01+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/Ddz5hSokhMk",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "18111690566127933",
+      "timestamp": "2026-09-28T00:28:51+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/Ddz5gJhkt5l",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "18094612148390987",
+      "timestamp": "2026-09-28T00:28:21+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/Ddz5cf3kosw",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "17900882091372421",
+      "timestamp": "2026-09-28T00:26:22+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/Ddz5N8dklFE",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "17989252623025426",
+      "timestamp": "2026-09-28T00:26:19+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/Ddz5Nmrkndf",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "17917790637450981",
+      "timestamp": "2026-09-28T00:26:16+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/Ddz5NJ0kgjX",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "17896956486396288",
+      "timestamp": "2026-09-28T00:24:43+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/Ddz5B1Rki0n",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "18147466339523106",
+      "timestamp": "2026-09-28T00:22:41+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/Ddz4y-7kgiG",
+      "text": "앞니 라미네이트, 고민해본 적 있으세요?\n\n웃거나 사진 찍을 때\n유독 신경 쓰이는 앞니! \n\n여러분은 어떤 게 가장 신경 쓰이세요?\n\n① 치아 색\n② 앞니 모양이나 크기\n③ 벌어진 앞니\n④ 깨지거나 마모된 부분\n⑤ 가지런하지 않은 모양\n\n라미네이트는 치아 앞면에 얇은 세라믹을 붙여\n색이나 모양 등을 개선하는 치료인데요.\n\n가장 많이 물어보시는 게\n“라미네이트 하면 치아를 많이 깎나요?” \n\n치아 상태와 배열, 원하는 모양에 따라\n삭제량이나 적합한 치료 방법은 달라질 수 있어요.\n\n그래서 무조건 예쁘게 만드는 것보다\n내 치아에 적합한 치료인지 확인하는 게 중요합니다\n\n여러분이라면\n자연스러운 앞니 vs 밝고 하얀 앞니✨\n어떤 게 더 좋으세요?ㅎㅎ\n\n자세한 내용은 블로그 참고글로도 올려둘게요 :)\nhttps://blog.naver.com/sound23151/224417654633",
+      "kind": "치과정보",
+      "views": 5,
+      "likes": 1,
+      "replies": 0,
+      "reposts": 0,
+      "quotes": 0
+    },
+    {
+      "id": "17984405115074252",
+      "timestamp": "2026-09-26T10:21:16+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdvzsbqG7ob",
+      "text": "오산에서 치과 하고 있는 원장입니다.\n\n동탄, 평택, 수원에서\n퇴근하고 오시는 분들이 은근 많아서\n저희는 월·수·금엔 저녁 늦게까지 진료해요.\n\n\"회사 끝나고 갈 데가 없더라\" 하시던\n어느 분 말이 계기였어요.\n\n이 근처 사시는 분들, 어디 사세요? ㅎㅎ",
+      "kind": "지역·일상",
+      "views": 6914,
+      "likes": 50,
+      "replies": 16,
+      "reposts": 1,
+      "quotes": 0
+    },
+    {
+      "id": "18109021112140379",
+      "timestamp": "2026-09-25T13:05:59+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/Ddthw8xEgTB",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "18152470483524453",
+      "timestamp": "2026-09-25T10:48:34+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdtSBeBm4CU",
+      "text": "추석 잘 보내고 계세요?\n\n오산에서 인사드립니다.\n\n오늘은 치아 얘기 안 할게요.\n송편이랑 갈비, 전 다 드시고\n가족들과 오래 웃으세요.\n\n다들 고향이세요, 아니면\n오산·동탄·평택·수원 집에서 쉬세요?",
+      "kind": "지역·일상",
+      "views": 498,
+      "likes": 12,
+      "replies": 4,
+      "reposts": 0,
+      "quotes": 0
+    },
+    {
+      "id": "18123959800841447",
+      "timestamp": "2026-09-25T10:00:15+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdtMglsjyBx",
+      "text": "충치 치료 미뤄본 적 있으세요?\n\n치과에서 충치가 하나 있네요~\n\n라는 말 들으면 여러분은 어떻게 하세요?\n\n① 바로 치료한다\n② 다음에 한다고 하고 미룬다\n③ 안 아프니까 일단 지켜본다\n④ 아플 때 다시 간다\n⑤ 충치 있다는 사실 자체를 잊어버린다🤣\n\n충치는 한 번 생기면\n저절로 없어지는 질환은 아니에요.\n\n진행 정도에 따라\n필요한 치료 범위도 달라질 수 있어서\n\n초기에 발견했다면\n적절한 시기에 치료하는 게 중요합니다.\n\n그런데 현실적으로…\n\n“안 아픈데 꼭 지금 해야 하나?”\n\n이 생각 한 번쯤 해보셨죠?\n\n여러분들은 몇 번 이신가요?",
+      "kind": "치과정보",
+      "views": 255,
+      "likes": 1,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0
+    },
+    {
+      "id": "17990018568105525",
+      "timestamp": "2026-09-25T09:09:25+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdtGsNhoAav",
+      "text": "오늘 친적들과 식사하는데\n조카 한명이 자기는\n\n1.밥 먹고 바로 양치\n2.치실 매일하기\n3.정기검진 챙기기\n4.스케일링 연2회\n\n전부 꼬박꼬박 잘 챙긴다네요!\n솔직히 치과의사인 저도 잘 못 챙기는데…!\n\n여러분들은 어떠세요?",
+      "kind": "치과정보",
+      "views": 495,
+      "likes": 7,
+      "replies": 2,
+      "reposts": 0,
+      "quotes": 0
+    },
+    {
+      "id": "18055188539802214",
+      "timestamp": "2026-09-24T10:34:13+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdqrlX2mwCO",
+      "text": "추석 연휴 첫날이네요.\n\n오산 오색시장은 며칠 전부터\n사람이 북적북적하더라고요.\n\n다들 고향 내려가세요, 아니면\n집에서 쉬세요?\n\n연휴엔 갈비랑 송편 실컷 드시고,\n치아는 연휴 끝나고 저희가 봐드릴게요 ㅎㅎ",
+      "kind": "지역·일상",
+      "views": 243,
+      "likes": 6,
+      "replies": 6,
+      "reposts": 1,
+      "quotes": 0
+    },
+    {
+      "id": "18104215280096762",
+      "timestamp": "2026-09-24T10:25:11+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdqqkVZIMEE",
+      "text": "추석 연휴 첫 날 다들 어떠셨나요?\n\n맛있는 거 많이 드시고,\n보고 싶었던 사람들과 실컷 웃고,\n조금은 느슨해져도 괜찮은 추석 보내세요.\n\n치아 걱정은 연휴 끝나고 제가 해드릴게요!\n모두 풍성하고 편안한 한가위 보내시길 바랍니다^^",
+      "kind": "지역·일상",
+      "views": 125,
+      "likes": 3,
+      "replies": 0,
+      "reposts": 0,
+      "quotes": 0
+    },
+    {
+      "id": "17944389705347340",
+      "timestamp": "2026-09-24T10:17:05+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/Ddqpo6bIPkW",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "17918903943445629",
+      "timestamp": "2026-09-24T10:16:17+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdqpjKFoCbQ",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "17891642568436978",
+      "timestamp": "2026-09-24T00:47:53+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdpogELEnS1",
+      "text": "🎁 추석 선물 도착했습니다 🎁\n\n추석이 다가와서 고생한 \n우리 직원들 선물 준비했어요ㅎㅎ\n\n뭘 하면 좋아할까 고민하다가\n이번에는 한우로 결정🥩\n\n하나씩 나눠줬는데\n생각보다 너무 좋아해줘서\n\n준비한 사람도 뿌듯하더라구요 ~\n\n평소에는 다 같이 정신없이 일하다 보니\n이렇게 챙겨줄 수 있는 날이 오면\n\n“준비하길 잘했다ㅎㅎ” 싶은 마음이 들어요.\n\n우리 직원들도 맛있게 먹고\n추석 연휴 푹 쉬고 오길!\n\n그리고 이 글 보시는 분들도\n이번 추석만큼은 잠시 바쁜 일 내려놓고\n\n가족들과 맛있는 것도 많이 드시고\n편안하고 즐거운 시간 보내셨으면 좋겠습니다\n\n모두 풍성하고 행복한 추석 보내세요🌕🤍",
+      "kind": "지역·일상",
+      "views": 193,
+      "likes": 4,
+      "replies": 2,
+      "reposts": 0,
+      "quotes": 0
+    },
+    {
+      "id": "18042611720691390",
+      "timestamp": "2026-09-23T19:23:21+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdpDXDykqRW",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "18141557284601304",
+      "timestamp": "2026-09-23T10:00:47+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdoC-tRgAt_",
+      "text": "아픈데도 무서워서 계속 참는 건 금물!\n\n치아 상태에 따라 치료 방법이 달라질 수 있으니\n통증이 계속된다면 검진을 받아보는 게 좋아요.\n\n자 그럼 신경치료 해보신 분들,\n몇 번이세요?\n\n그리고 아직 안 해본 분들은\n\n신경치료 하면 가장 먼저 떠오르는 게\n아프겠다 vs 무섭다 vs 치료비\n\n어떤 건지도 궁금합니다 !\n\n신경치료가 왜 필요한지,\n어떤 과정으로 진행되는지 궁금하신 분들을 위해\n\n조금 더 자세한 내용은\n참고하실 수 있도록 블로그에도 올려둘게요 :)\n\n궁금하셨던 분들은\n편하게 참고해 주세요\nhttps://blog.naver.com/sound23151/224402736157",
+      "kind": "치과정보",
+      "views": 63,
+      "likes": 1,
+      "replies": 0,
+      "reposts": 0,
+      "quotes": 0
+    },
+    {
+      "id": "18208299712366322",
+      "timestamp": "2026-09-21T11:09:56+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdjBTYbFGdY",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "18101696429017971",
+      "timestamp": "2026-09-21T11:09:49+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdjBSkTFMew",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "17885490888485154",
+      "timestamp": "2026-09-21T11:09:29+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdjBQHmFFy6",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "18116341984950506",
+      "timestamp": "2026-09-21T11:08:52+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdjBLntlFOn",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "18117148663948753",
+      "timestamp": "2026-09-21T11:08:08+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdjBGTCFKfg",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "17908894443493041",
+      "timestamp": "2026-09-21T11:07:21+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdjBAfXFDhJ",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "17911830771522874",
+      "timestamp": "2026-09-21T11:07:19+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdjBAQslOxf",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "18124098307879492",
+      "timestamp": "2026-09-21T11:07:13+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdjA_e4FByj",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "18470136547119817",
+      "timestamp": "2026-09-21T11:06:10+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdjA336FIa7",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "18165093517471242",
+      "timestamp": "2026-09-21T11:05:59+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdjA2d9FNT4",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "17935772112365855",
+      "timestamp": "2026-09-21T11:05:30+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdjAy8sFM4c",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "17906567223327030",
+      "timestamp": "2026-09-21T11:05:24+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdjAyPvlNgd",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "18102737441203459",
+      "timestamp": "2026-09-21T11:05:22+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdjAx-fFIwP",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "18102186914629059",
+      "timestamp": "2026-09-21T11:04:27+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdjArTglMdq",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "17970989886148626",
+      "timestamp": "2026-09-21T11:04:08+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdjAo7clMoj",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "18100815554289332",
+      "timestamp": "2026-09-21T11:02:58+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdjAgcBlM4U",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "18425502889147674",
+      "timestamp": "2026-09-21T11:02:56+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdjAgJaFI6S",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "18110734004333504",
+      "timestamp": "2026-09-21T11:00:29+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdjAOOWFF4r",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "17944724148340156",
+      "timestamp": "2026-09-21T11:00:26+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdjAN10FLL8",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "18109324757138166",
+      "timestamp": "2026-09-21T10:58:47+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdjABwUlHsu",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "18103501985365626",
+      "timestamp": "2026-09-21T10:00:09+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/Ddi5UWRgHzP",
+      "text": "씹을때 한쪽으로만 씹는 분 계세요?\n\n밥 먹을 때 자세히 보면\n\n나도 모르게 항상 같은 쪽으로만\n씹고 있는 분들이 있어요.\n\n여러분은 어떠세요?\n\n① 양쪽 골고루 씹는다\n② 주로 오른쪽\n③ 주로 왼쪽\n④ 아픈 쪽을 피해서 씹는다\n⑤ 어디로 씹는지 모르겠다🤣\n\n특정 치아가 불편해서\n반대쪽으로만 씹는 경우도 있는데요.\n\n한쪽으로 씹는 습관이 생겼다면\n\n단순한 습관인지,\n반대편 치아에 불편한 부분이 있는지도 확인해 볼 필요가 있어요.\n\n그런데 이 글 보는 순간부터\n갑자기 의식되실걸요~\n\n오늘 밥 먹을 때 한번 확인해 보세요.\n\n나는 오른쪽이다🙋‍♀️\n나는 왼쪽이다🙋‍♂️\n\n어느 쪽이 더 많은지 궁금합니다",
+      "kind": "치과정보",
+      "views": 82,
+      "likes": 3,
+      "replies": 0,
+      "reposts": 0,
+      "quotes": 0
+    },
     {
       "id": "18094266368531873",
       "timestamp": "2026-09-20T04:00:51+0000",
@@ -146,8 +490,8 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/DdeLRnIFDfd",
       "text": "임신하면 잇몸에서 피가 잘 나요.\n\n호르몬 탓이라 정상인데,\n이때 꼭 챙길 것 3가지\n댓글에 적어둘게요.",
       "kind": "치과정보",
-      "views": 2718,
-      "likes": 1,
+      "views": 2762,
+      "likes": 3,
       "replies": 1,
       "reposts": 0,
       "quotes": 0
@@ -163,13 +507,6 @@
       "id": "18150728164530819",
       "timestamp": "2026-09-16T15:52:29+0000",
       "permalink": "https://www.threads.com/@ds_dental_osan/post/DdWpqdhkrX5",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "17902906119579302",
-      "timestamp": "2026-09-16T15:51:56+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdWpmcfEhLH",
       "text": "",
       "kind": "치과정보"
     },
@@ -319,8 +656,8 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/DdWBWGQgCdu",
       "text": "치아교정 고민할 때\n제일 먼저 드는 생각이 뭔가요? \n\n“얼마나 아플까요?”\n“몇 년이나 해야 하나요?”\n“지금 시작하기엔 너무 늦은 건 아닐까요?”\n\n특히 성인이 된 후에는 기간이나 비용, \n교정장치 때문에 망설이는 분들이 많습니다.\n\n그런데 치아교정은 단순히 \n앞니를 가지런하게 만드는 치료만은 아닙니다. \n치아 배열뿐 아니라 위아래 치아가 맞물리는 교합, \n잇몸과 치아 상태 등을 함께 확인해야 합니다.\n\n그래서 비슷한 덧니나 돌출입처럼 보여도 \n치료 방법이나 기간은 달라질 수 있습니다.\n\n여러분이 치아교정을 망설이는 가장 큰 이유는 무엇인가요?\n\n① 통증 ② 기간 ③ 비용 ④ 교정장치\n\n치아교정에 대해 더 자세히 알고 싶으시다면\n아래  블로그에도 정리해두었으니 참고해 주세요 :)\n\nhttps://blog.naver.com/sound23151/224396454236",
       "kind": "치과정보",
-      "views": 72,
-      "likes": 3,
+      "views": 116,
+      "likes": 5,
       "replies": 3,
       "reposts": 2,
       "quotes": 0
@@ -331,7 +668,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/DdT8lO8HD3E",
       "text": "제로콜라랑 오렌지주스,\n치아엔 어떤 게 더 해로울까요?\n\n의외로 둘 다 비슷하게 안 좋습니다.\n\n제로콜라는 설탕은 없지만\n산성이 강해서 치아 표면을 녹이고,\n오렌지주스는 산성에 당분까지 있어요.\n\n둘 다 마신 뒤엔\n물 한 모금으로 입을 헹궈 주세요.",
       "kind": "치과정보",
-      "views": 451,
+      "views": 478,
       "likes": 2,
       "replies": 2,
       "reposts": 0,
@@ -485,19 +822,12 @@
       "kind": "치과정보"
     },
     {
-      "id": "18113593390820550",
-      "timestamp": "2026-09-14T12:06:21+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdRGMkCkjIW",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
       "id": "17906498232551349",
       "timestamp": "2026-09-14T10:38:29+0000",
       "permalink": "https://www.threads.com/@ds_dental_osan/post/DdQ8I8bILR-",
       "text": "치아 시린 거 그냥 참고 계세요?\n\n찬물 마실 때 갑자기\n\n“앗!! 이 시려” , 해본 적 있으신가요?\n\n① 찬물 마실 때만 시리다\n② 아이스크림 먹으면 시리다\n③ 양치할 때도 시리다\n④ 가끔 시리지만 금방 괜찮아진다\n⑤ 이제 익숙해서 그냥 산다\n\n치아가 시린 이유는 생각보다 다양해요.\n\n잇몸이 내려가 치아 뿌리가 노출됐거나,치아가 마모됐거나\n충치 등의 문제가 원인일 수도 있습니다.\n\n그래서 계속 반복되는 시림은\n“원래 내 치아가 예민한가 보다~” 하고 넘기기보다\n원인을 한번 확인해 보는 게 좋아요.\n\n그럼 여기서 조사 들어갑니다 !\n\n시린 이 있는데 그냥 참고 사는 분 있나요~?\n몇 번인지 댓글로 알려주세요ㅎㅎ",
       "kind": "치과정보",
-      "views": 68,
+      "views": 89,
       "likes": 3,
       "replies": 0,
       "reposts": 1,
@@ -516,7 +846,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/DdO_yBfERIx",
       "text": "입 벌리고 주무시는 분들, 잇몸이 잘 붓습니다.\n\n입이 마르면 침이 씻어낼 수가 없으니\n세균이 밤새 그대로 남습니다.\n\n코가 자주 막히신다면 이비인후과도 한번 가보세요.\n치과만의 문제가 아닙니다.",
       "kind": "치과정보",
-      "views": 385,
+      "views": 403,
       "likes": 5,
       "replies": 0,
       "reposts": 0,
@@ -528,7 +858,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/DdO0hc2ldhT",
       "text": "하루에 딱 한 번만 닦으실 거면 밤에 닦으세요.\n\n자는 동안은 침이 거의 안 나옵니다.\n낮에 남은 음식보다\n밤에 남은 음식이 몇 배 더 위험해요.\n\n피곤하셔도 이것 하나만요.",
       "kind": "치과정보",
-      "views": 2376,
+      "views": 2394,
       "likes": 10,
       "replies": 2,
       "reposts": 2,
@@ -568,7 +898,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/DdOtdtuIGah",
       "text": "교정은 티 나서 싫다는\n분들 정말 많아요.\n\n요즘은 투명한 장치로\n하는 방법도 있습니다.\n빼고 식사도 가능해요.",
       "kind": "치과정보",
-      "views": 461,
+      "views": 479,
       "likes": 3,
       "replies": 0,
       "reposts": 1,
@@ -627,6 +957,13 @@
       "id": "17872920696581994",
       "timestamp": "2026-09-13T12:16:08+0000",
       "permalink": "https://www.threads.com/@ds_dental_osan/post/DdOihQyks7w",
+      "text": "",
+      "kind": "치과정보"
+    },
+    {
+      "id": "18110655590120963",
+      "timestamp": "2026-09-13T12:15:33+0000",
+      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdOic_2kpWn",
       "text": "",
       "kind": "치과정보"
     },
@@ -699,7 +1036,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/DdMBjHbmyNx",
       "text": "이번 한 주도\n다들 수고 많으셨어요.\n\n별일 없이 지나간 것\n자체가 참 감사한\n요즘입니다.",
       "kind": "치과정보",
-      "views": 77,
+      "views": 95,
       "likes": 6,
       "replies": 5,
       "reposts": 2,
@@ -858,8 +1195,8 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/DdJ4DXSm8d5",
       "text": "양치하고 너무 많이 헹구지 마세요.\n\n입안에 남은 불소가 치아를 지켜주는데\n열 번씩 헹구시면 그걸 다 씻어내는 겁니다.\n\n한 번, 가볍게면 충분합니다.",
       "kind": "치과정보",
-      "views": 465,
-      "likes": 7,
+      "views": 481,
+      "likes": 8,
       "replies": 1,
       "reposts": 3,
       "quotes": 0
@@ -1038,7 +1375,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/DdJi7znIOcW",
       "text": "치과 가야지 하다가\n반차 아까워서 미루신\n경험 있으실 거예요.\n\n월수금은 저녁에도\n진료하고 있어요.",
       "kind": "치과정보",
-      "views": 307,
+      "views": 320,
       "likes": 12,
       "replies": 7,
       "reposts": 1,
@@ -1050,7 +1387,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/DdG_MhaG2rI",
       "text": "갑자기 갓 구운 빵\n냄새가 그리워지네요.\n\n오산에 진짜 맛있는\n빵집 어디인가요?\n한 곳만 알려주세요 🙂",
       "kind": "지역·일상",
-      "views": 2843,
+      "views": 2864,
       "likes": 19,
       "replies": 13,
       "reposts": 1,
@@ -1062,7 +1399,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/DdEjx_5FRRx",
       "text": "칫솔은 치아가 아니라 잇몸 경계에 대세요.\n\n45도로 비스듬히 대고\n짧게 진동하듯 흔들어주시면 됩니다.\n\n문제가 생기는 곳은\n치아 한가운데가 아니라 잇몸 경계선이거든요.",
       "kind": "치과정보",
-      "views": 500,
+      "views": 512,
       "likes": 5,
       "replies": 0,
       "reposts": 1,
@@ -1074,7 +1411,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/DdEZEWyoO0H",
       "text": "임플란트는 썩지 않으니\n관리 안 해도 된다?\n\n아닙니다. 잇몸이\n무너지면 똑같이\n빠집니다. 검진 꼭요.",
       "kind": "치과정보",
-      "views": 309,
+      "views": 320,
       "likes": 8,
       "replies": 0,
       "reposts": 0,
@@ -1247,7 +1584,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/DdC7JQTD_vH",
       "text": "양치 열심히 하는데 충치 생기는 분들 특징\n\n“저 하루에 세 번씩 닦는데\n왜 충치가 생겨요?”\n\n억울하시죠ㅎㅎ\n\n그런데 양치는\n몇 번 하느냐만큼 어디를 닦느냐도 중요합니다.\n\n특히 칫솔이 잘 닿지 않는\n치아와 치아 사이!\n\n여기는 양치만으로\n깨끗하게 관리하기 어려울 수 있어요.\n\n그래서 열심히 양치하는데도\n치아 사이에 문제가 반복된다면\n\n치실이나 치간칫솔도\n같이 사용해보시는 걸 추천드려요.\n\n양치 3번 대충 하는 것보다\n한 번이라도 꼼꼼하게!ㅎㅎ",
       "kind": "치과정보",
-      "views": 173,
+      "views": 184,
       "likes": 3,
       "replies": 1,
       "reposts": 0,
@@ -1259,7 +1596,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/DdCKTQekalq",
       "text": "전동칫솔로 문지르지 마세요.\n\n가만히 대고만 계시면 됩니다.\n손칫솔처럼 박박 문지르시면\n잇몸이 오히려 더 상해요.\n\n칫솔이 일하게 두세요.",
       "kind": "치과정보",
-      "views": 215,
+      "views": 223,
       "likes": 2,
       "replies": 0,
       "reposts": 0,
@@ -1271,18 +1608,11 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/DdBvOLMIJiF",
       "text": "요즘은 자기 전에\n음악 하나 틀어놓는 게\n유일한 힐링이에요.\n\n다들 뭐 하면서\n푸시나요?",
       "kind": "치과정보",
-      "views": 817,
+      "views": 824,
       "likes": 17,
       "replies": 24,
       "reposts": 1,
       "quotes": 0
-    },
-    {
-      "id": "18731475334190801",
-      "timestamp": "2026-09-08T09:36:15+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DdBYP8aIF2X",
-      "text": "",
-      "kind": "치과정보"
     },
     {
       "id": "18104178740221824",
@@ -1381,7 +1711,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/Dc_sj5BGTI-",
       "text": "이쑤시개 쓰지 마세요.\n\n잇몸을 찌르면 그 자리가 벌어지고,\n벌어지면 음식이 더 잘 낍니다.\n쓸수록 더 필요해지는 구조예요.\n\n치실이나 치간칫솔 하나 가지고 다니세요.",
       "kind": "치과정보",
-      "views": 745,
+      "views": 752,
       "likes": 4,
       "replies": 1,
       "reposts": 0,
@@ -1393,7 +1723,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/Dc-T7dojPfo",
       "text": "치과 몇 년째 안 가셨나요?ㅎㅎ\n\n마지막으로 치과 간 게 언제세요?\n\n① 6개월 이내\n② 1년 정도\n③ 2~3년\n④ 5년 이상\n⑤ 기억안나요😂\n\n치아가 안 아프니까\n괜찮겠지~ 하고 지내시는 분들이 많은데\n\n충치나 잇몸질환은\n초기에 별다른 증상이 없는 경우도 있습니다.\n\n그래서 아파서 오는 것보다\n안 아플 때 검진받으러 오는 게 훨씬 좋아요.\n\n자 그럼…\n\n⑤번 계십니까?\n혼내지 않을 테니 솔직하게 댓글 달아주세요🤣",
       "kind": "치과정보",
-      "views": 620,
+      "views": 628,
       "likes": 7,
       "replies": 10,
       "reposts": 1,
@@ -1433,7 +1763,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/Dc85t2EIFeu",
       "text": "껌이 무조건 나쁜 건 아닙니다.\n\n무설탕 껌은 침을 훨씬 많이 나오게 해서\n오히려 입안을 씻어주는 역할을 합니다.\n\n양치 못 하실 때 5분이면 충분해요.\n단, 설탕 든 껌은 그냥 사탕입니다.",
       "kind": "치과정보",
-      "views": 616,
+      "views": 621,
       "likes": 1,
       "replies": 0,
       "reposts": 0,
@@ -1445,7 +1775,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/Dc8glFpkXWf",
       "text": "신경치료 아프다는 말,\n반은 오해입니다.\n\n오히려 아픈 신경을\n치우는 치료예요.\n\n미루는 게 더 아픕니다.",
       "kind": "치과정보",
-      "views": 410,
+      "views": 415,
       "likes": 5,
       "replies": 1,
       "reposts": 1,
@@ -1576,7 +1906,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/Dc75SMxoNVW",
       "text": "수술하신 환자가 평소 제 스레드를 보고\n저희 병원이 자주 애용하는 카페에\n직접가셔서 커피와 빵을 사다 주었어요!\n\n너무 감사하고\n스레드를 통해 많은 분들과\n소통할 수 있어서 너무 행복한 요즘입니다.",
       "kind": "치과정보",
-      "views": 649,
+      "views": 654,
       "likes": 23,
       "replies": 3,
       "reposts": 0,
@@ -1826,7 +2156,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/Dc6BmcWG9KW",
       "text": "진료 다 끝내고\n불 끄는 이 시간이\n제일 좋습니다.\n\n오늘 하루 어떠셨어요?",
       "kind": "치과정보",
-      "views": 300,
+      "views": 307,
       "likes": 11,
       "replies": 4,
       "reposts": 0,
@@ -1838,7 +2168,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/Dc4n-xSDB2D",
       "text": "치과 가기 제일 싫은 이유가 뭔가요?!\n\n치과의사 입장에서는\n진짜 궁금한 게 하나 있습니다ㅎㅎ\n\n환자분들은 어떤이유로 \n치과가 제일 무서우세요!?\n\n1️⃣ 치료할 때 아플까 봐\n2️⃣ 치과 특유의 소리 때문에\n3️⃣ 비용 많이 나올까 봐\n4️⃣ 혼날 것 같아서(?)\n5️⃣ 그냥 치과라는 공간 자체가 싫어요\n\n사실 치과를 오래 미룰수록\n치료가 더 복잡해지는 경우가 있어서\n\n저희는 오히려\n아무것도 아닐 때 오시는 게 제일 좋습니다ㅎㅎ\n\n솔직하게 번호 하나만 골라주세요.\n제일 많은 답 뭔지 궁금합니다!",
       "kind": "치과정보",
-      "views": 181,
+      "views": 190,
       "likes": 3,
       "replies": 4,
       "reposts": 0,
@@ -1850,7 +2180,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/Dc31ZFkke16",
       "text": "양치 못 하는 상황이면 물이라도 한 모금 하세요.\n\n먹고 나서 물로 헹궈만 줘도\n입안 산도가 훨씬 빨리 돌아옵니다.\n\n가글보다 물이 낫습니다. 진심입니다.",
       "kind": "치과정보",
-      "views": 385,
+      "views": 390,
       "likes": 2,
       "replies": 0,
       "reposts": 0,
@@ -1862,7 +2192,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/Dc3hKhFFRHA",
       "text": "아이 교정, 무조건\n영구치 다 나오고\n하는 거 아닙니다.\n\n7~8세쯤 한 번은\n봐두시면 좋아요.",
       "kind": "치과정보",
-      "views": 601,
+      "views": 606,
       "likes": 4,
       "replies": 1,
       "reposts": 0,
@@ -1874,7 +2204,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/Dc1ROeeFLnF",
       "text": "치실이 잘 안 되시면 치간칫솔을 써보세요.\n\n나이가 들면서 치아 사이가 벌어진 분들은\n치실이 헐렁해서 제대로 안 닦입니다.\n\n크기만 맞으면 훨씬 쉽고 확실해요.\n오시면 맞는 크기 골라드릴게요.",
       "kind": "치과정보",
-      "views": 131,
+      "views": 136,
       "likes": 1,
       "replies": 0,
       "reposts": 0,
@@ -1886,7 +2216,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/Dc1E98bmzNi",
       "text": "칫솔 사실 때 이것만 보세요.\n\n머리가 작은 걸 고르세요.\n\n큰 칫솔은 어금니 안쪽까지 안 들어갑니다.\n정작 제일 잘 썩는 자리를 못 닦는 거예요.\n\n지금 쓰시는 칫솔, 얼마나 크세요?",
       "kind": "치과정보",
-      "views": 247,
+      "views": 252,
       "likes": 4,
       "replies": 1,
       "reposts": 0,
@@ -1926,7 +2256,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/Dc0289GIK_0",
       "text": "오산 오래 있으면서\n느낀 건데, 여기 분들\n참 정이 많으세요.\n\n괜히 저만 그렇게\n느끼는 걸까요? ㅎㅎ",
       "kind": "지역·일상",
-      "views": 3420,
+      "views": 3428,
       "likes": 38,
       "replies": 8,
       "reposts": 0,
@@ -1938,7 +2268,7 @@
       "permalink": "https://www.threads.com/@ds_dental_osan/post/Dc0AvxJDt_F",
       "text": "치과에서 보면 정말 안타까운 경우가 있어요.\n\n“조금 불편하긴 했는데\n참을 만해서 그냥 뒀어요.”\n\n그러다 통증이 심해져서\n뒤늦게 오시는 경우입니다ㅠㅠ\n\n치아 문제는 초기에\n별다른 통증이 없는 경우도 있어요.\n\n그래서\n안 아프다 = 아무 문제 없다\n라고 단정하긴 어렵습니다.\n\n작을 때 발견하면 비교적 간단하게\n끝날 수 있었던 치료도\n진행 정도에 따라 치료가 커질 수 있습니다\n\n그러니까 치과는\n아파서 못 참을 때 가는 곳보다는\n\n안 아플 때 미리 확인하러 오는 곳!\n\n저희는 환자분들이\n별거 아닌 상태로 오시는 게 제일 좋습니다ㅎㅎ",
       "kind": "치과정보",
-      "views": 113,
+      "views": 118,
       "likes": 3,
       "replies": 0,
       "reposts": 0,
@@ -2011,301 +2341,6 @@
       "id": "18077178605360012",
       "timestamp": "2026-09-02T23:46:20+0000",
       "permalink": "https://www.threads.com/@ds_dental_osan/post/DczcwyQkq1J",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "17975501172066507",
-      "timestamp": "2026-09-02T23:46:16+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DczcwVgkuMG",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18129963982776958",
-      "timestamp": "2026-09-02T23:46:07+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DczcvPDEgeC",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "17945907540297620",
-      "timestamp": "2026-09-02T23:45:18+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DczcpTXku1N",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18120295858716379",
-      "timestamp": "2026-09-02T15:02:57+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/Dcyg2XRlUi6",
-      "text": "잇몸 염증은 잇몸에서 끝나지 않습니다.\n\n염증이 오래 가면 혈관을 타고 돌면서\n심혈관이나 혈당 조절에까지\n영향을 준다는 연구가 계속 나옵니다.\n\n제가 유난히 잇몸 얘기를 많이 하는 이유입니다.",
-      "kind": "치과정보",
-      "views": 565,
-      "likes": 2,
-      "replies": 0,
-      "reposts": 0,
-      "quotes": 0
-    },
-    {
-      "id": "18377270005237398",
-      "timestamp": "2026-09-02T12:51:32+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcyRw8ZlLow",
-      "text": "입냄새, 위장 문제라고\n생각하시는 분 많아요.\n\n사실 대부분은 입안이\n말라서 생깁니다.\n\n물 자주 드세요.",
-      "kind": "치과정보",
-      "views": 474,
-      "likes": 6,
-      "replies": 0,
-      "reposts": 0,
-      "quotes": 0
-    },
-    {
-      "id": "18099990653625327",
-      "timestamp": "2026-09-02T09:04:51+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/Dcx34sCIF5W",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18002613017792802",
-      "timestamp": "2026-09-02T09:04:17+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/Dcx30gRoJ0i",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18037121684703525",
-      "timestamp": "2026-09-01T22:29:40+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcwvMYmEriD",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18368536594208913",
-      "timestamp": "2026-09-01T22:28:36+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcwvEqJEhIS",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18111252284111077",
-      "timestamp": "2026-09-01T22:27:48+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/Dcwu-t8kq-g",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18113822351064591",
-      "timestamp": "2026-09-01T22:27:31+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/Dcwu8sTEoM_",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18097121129636948",
-      "timestamp": "2026-09-01T22:23:52+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/Dcwuh6TkpTD",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18164721226474330",
-      "timestamp": "2026-09-01T22:23:46+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcwuhN4kiih",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18380483446229065",
-      "timestamp": "2026-09-01T22:23:32+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/Dcwuffskodr",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18084345599442638",
-      "timestamp": "2026-09-01T22:22:14+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcwuV-nEpjL",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18073416827710233",
-      "timestamp": "2026-09-01T22:20:16+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcwuHkAkufm",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18348616651268427",
-      "timestamp": "2026-09-01T22:19:31+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcwuCD0Euk-",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18098503019367693",
-      "timestamp": "2026-09-01T22:18:59+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/Dcwt-JVEjYd",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "17885633856683781",
-      "timestamp": "2026-09-01T22:18:19+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/Dcwt5W6ktB4",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "17897632656666517",
-      "timestamp": "2026-09-01T22:16:56+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcwtvOzkpEP",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18019337294873353",
-      "timestamp": "2026-09-01T22:16:31+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcwtsFaEriU",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "17911898868452865",
-      "timestamp": "2026-09-01T22:15:54+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcwtnjoEsKe",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18085206227272281",
-      "timestamp": "2026-09-01T22:15:07+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/Dcwth0Wkjow",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18007914107768906",
-      "timestamp": "2026-09-01T15:26:53+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/Dcv-y4UG2nN",
-      "text": "치과가 무서우신 분들, 이 한마디만 해보세요.\n\n\"무통마취기로 해주세요.\"\n\n바늘 들어가는 압력을 기계가 천천히 조절해줍니다.\n찌르는 느낌 자체가 확 줄어요.\n\n말씀 안 하시면 저희는 모릅니다.\n무섭다고 그냥 말씀하세요.",
-      "kind": "치과정보",
-      "views": 449,
-      "likes": 4,
-      "replies": 2,
-      "reposts": 2,
-      "quotes": 0
-    },
-    {
-      "id": "18096550934455980",
-      "timestamp": "2026-09-01T10:28:56+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcvctmXoMkS",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "17987275688865826",
-      "timestamp": "2026-09-01T10:28:45+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcvcsR9IK8P",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18085147235492473",
-      "timestamp": "2026-09-01T10:27:57+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcvcmX0oNAm",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "17912689728265013",
-      "timestamp": "2026-09-01T10:27:03+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/Dcvcf27IFce",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18009832934950233",
-      "timestamp": "2026-09-01T10:26:18+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcvcaVMIIEQ",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "17867448063648613",
-      "timestamp": "2026-09-01T10:25:36+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcvcVMyIE0Y",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18141436669585077",
-      "timestamp": "2026-09-01T10:24:55+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcvcQOJIIha",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18352583836168312",
-      "timestamp": "2026-09-01T10:24:51+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcvcPs1IEHP",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "17940204846087186",
-      "timestamp": "2026-09-01T10:23:58+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcvcJODoA6O",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18114907628073979",
-      "timestamp": "2026-09-01T10:23:47+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcvcH-GoPBt",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18349825354223400",
-      "timestamp": "2026-09-01T10:23:01+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcvcCUxIBCO",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18005747054775203",
-      "timestamp": "2026-09-01T10:20:28+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcvbvocoA9f",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18137041816720927",
-      "timestamp": "2026-09-01T10:20:22+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/Dcvbu1aIOF-",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "18130975855709698",
-      "timestamp": "2026-09-01T10:18:53+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcvbkEHoIRD",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "17912911932261886",
-      "timestamp": "2026-09-01T10:18:43+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcvbixioDrs",
-      "text": "",
-      "kind": "치과정보"
-    },
-    {
-      "id": "17924884506180702",
-      "timestamp": "2026-09-01T10:17:57+0000",
-      "permalink": "https://www.threads.com/@ds_dental_osan/post/DcvbdM4IFyF",
       "text": "",
       "kind": "치과정보"
     }
