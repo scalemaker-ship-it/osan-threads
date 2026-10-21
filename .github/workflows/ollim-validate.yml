@@ -1,0 +1,13 @@
+name: ollim-threads-validate
+on: { workflow_dispatch: {} }
+jobs:
+  v:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - run: npm i axios@1.7.9 --no-save
+      - env: { THREADS_ACCESS_TOKEN: "${{ secrets.THREADS_ACCESS_TOKEN }}" }
+        run: node ollim-val/validate.js
