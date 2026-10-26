@@ -86,3 +86,11 @@ gh run list --repo scalemaker-ship-it/osan-threads --limit 3
 
 - 시간대·슬롯 변경은 `threads-weekly.yml`의 `cron`과 `post.py`의 `SLOT_CRONS`를 **같이** 수정(문자열이 정확히 일치해야 함, UTC 기준)
 - Threads 토큰 만료 시 `THREADS_ACCESS_TOKEN` Secret 갱신(재발급 절차는 메모리 `osan-threads-token` 참고)
+
+## 발행 누락 보완: 이 맥 launchd 트리거 (2026-10-26 추가)
+
+GitHub 크론은 15분 간격으로 깔아도 하루 2번 정도만 실행되고 19:00~20:30 창을 비껴가 10월 발행률이 5/12였다.
+그래서 이 맥(launchd `com.osan.threads-dispatch`)이 **매일 19:00, 19:40 KST** 에 `tools/dispatch.sh` 를 돌려
+원격 `posted_log.json` 에 오늘 발행이 없고 발행일(화목토 또는 pinned 날짜)이면 `gh workflow run threads-weekly.yml` 로 워크플로우를 깨운다.
+`post.py` 는 예약/수동 구분 없이 "오늘 이미 발행"이면 종료하므로(`FORCE=1` 로만 우회) 이중 발행은 나지 않는다.
+로그: `~/Library/Logs/osan-threads-dispatch.log`. 맥이 꺼져 있으면 GitHub 크론만으로 돌아간다(기존과 동일).

@@ -188,12 +188,16 @@ def main() -> None:
     # 예약 실행 게이팅 — 크론 시각이 아니라 '실제 KST 시각'으로 판단한다.
     # GitHub 크론은 수 시간까지 밀리므로, 창(19:00~20:30) 안에 들어온 첫 실행에서만 발행한다.
     # 수동 실행(workflow_dispatch)·로컬은 검사 없이 바로 진행한다.
-    if os.environ.get("GITHUB_EVENT_NAME", "") == "schedule":
+    # 하루 1건 보장: 예약·수동(workflow_dispatch) 모두 오늘 발행했으면 끝낸다.
+    # 이 맥 launchd 가 19:00 KST 에 workflow_dispatch 를 쏘므로(크론 지연 보완) 이중 발행을 막아야 한다.
+    # 로컬 테스트나 정말 한 번 더 내야 할 때만 FORCE=1.
+    if not dry and not truthy(os.environ.get("FORCE")):
         already = [p for p in load_posted() if p.get("date") == today]
         if already:
             print(f"[{now:%Y-%m-%d %H:%M KST}] 오늘({today}) 이미 발행했습니다 "
-                  f"({already[-1].get('at')} · {already[-1].get('topic')}). 종료합니다.")
+                  f"({already[-1].get('at')} / {already[-1].get('topic')}). 종료합니다.")
             return
+    if os.environ.get("GITHUB_EVENT_NAME", "") == "schedule":
         if not in_window(now):
             print(f"[{now:%Y-%m-%d %H:%M KST}] 발행 창"
                   f"({WINDOW_START[0]:02d}:{WINDOW_START[1]:02d}~"
