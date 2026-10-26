@@ -7,8 +7,13 @@ REPO=scalemaker-ship-it/osan-threads
 LOG=$HOME/Library/Logs/osan-threads-dispatch.log
 TODAY=$(TZ=Asia/Seoul date +%Y-%m-%d)
 DOW=$(TZ=Asia/Seoul date +%u)   # 1=월 ... 6=토 7=일
+HM=$(TZ=Asia/Seoul date +%H%M)
 {
   echo "[$(date '+%F %T')] 시작 (KST $TODAY, 요일 $DOW)"
+  # 잠자기에서 늦게 깨어 실행될 때 새벽 발행을 막는다: 19:00~22:00 KST 에만 호출.
+  if (( HM < 1900 || HM > 2200 )); then
+    echo "  허용 시간(19:00~22:00 KST) 밖($HM). 건너뜀."; exit 0
+  fi
   if gh api repos/$REPO/contents/posted_log.json --jq .content 2>/dev/null | base64 -d | grep -q "\"date\": \"$TODAY\""; then
     echo "  오늘 이미 발행됨. 건너뜀."; exit 0
   fi
