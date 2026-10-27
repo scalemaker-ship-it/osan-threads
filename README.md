@@ -93,4 +93,5 @@ GitHub 크론은 15분 간격으로 깔아도 하루 2번 정도만 실행되고
 그래서 이 맥(launchd `com.osan.threads-dispatch`)이 **매일 19:00, 19:40 KST** 에 `tools/dispatch.sh` 를 돌려
 원격 `posted_log.json` 에 오늘 발행이 없고 발행일(화목토 또는 pinned 날짜)이면 `gh workflow run threads-weekly.yml` 로 워크플로우를 깨운다.
 `post.py` 는 예약/수동 구분 없이 "오늘 이미 발행"이면 종료하므로(`FORCE=1` 로만 우회) 이중 발행은 나지 않는다.
+**launchd 는 `~/bin/osan-threads-dispatch.sh`(tools/dispatch.sh 의 복사본)를 실행한다.** Desktop 아래 경로를 plist 에 넣으면 macOS 가 백그라운드 접근을 막아 exit 127 로 죽는다(2026-10-27 실측). tools/dispatch.sh 를 고치면 `cp tools/dispatch.sh ~/bin/osan-threads-dispatch.sh` 로 복사해야 반영된다.
 로그: `~/Library/Logs/osan-threads-dispatch.log`. 맥이 꺼져 있으면 GitHub 크론만으로 돌아간다(기존과 동일).
